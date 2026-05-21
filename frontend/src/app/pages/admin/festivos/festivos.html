@@ -1,0 +1,143 @@
+<div class="pagina-wrapper">
+  <!-- Banner superior -->
+  <div class="banner">
+    <div class="banner-contenido">
+      <div class="banner-icono">
+        <i class="fa-solid fa-calendar-days"></i>
+      </div>
+      <div class="banner-texto">
+        <h1 class="banner-titulo">Festivos</h1>
+        <p class="banner-descripcion">Gestion de dias festivos de la empresa</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="contenido-pagina">
+    <div class="card">
+      <div class="card-body">
+        <!-- Cabecera -->
+        <div class="tabla-cabecera">
+          <div class="tabla-cabecera-izq">
+            <span class="tabla-titulo">Festivos</span>
+            <span class="contador">{{ festivos().length }}</span>
+          </div>
+        </div>
+
+        <!-- Mensaje de estado -->
+        @if (mensaje()) {
+          <div class="mensaje-estado" [class.mensaje-exito]="tipoMensaje() === 'exito'" [class.mensaje-error]="tipoMensaje() === 'error'">
+            <i class="fa-solid" [class.fa-circle-check]="tipoMensaje() === 'exito'" [class.fa-circle-xmark]="tipoMensaje() === 'error'"></i>
+            {{ mensaje() }}
+          </div>
+        }
+
+        <!-- Formulario de crear -->
+        <form class="crear-form" [formGroup]="form" (ngSubmit)="form.valid && crearFestivo()">
+          <input
+            type="text"
+            class="form-control input-nombre"
+            placeholder="Nombre del festivo"
+            formControlName="nombre"
+          />
+          <input
+            type="date"
+            class="form-control input-fecha"
+            formControlName="fecha"
+          />
+          <button
+            type="submit"
+            class="btn-crear"
+            [disabled]="form.invalid"
+          >
+            <i class="fa-solid fa-plus me-1"></i> Crear
+          </button>
+        </form>
+
+        <!-- Cargando -->
+        @if (cargando()) {
+          <div class="estado-vacio">
+            <span class="spinner-border spinner-border-sm me-2"></span>
+            Cargando festivos...
+          </div>
+        }
+
+        <!-- Tabla de festivos -->
+        @if (!cargando() && festivos().length > 0) {
+          <table class="tabla-datos">
+            <thead>
+              <tr>
+                <th>Nombre</th>
+                <th class="col-fecha">Fecha</th>
+                <th class="col-acciones">Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (f of festivos(); track f.id) {
+                <tr>
+                  <!-- Nombre -->
+                  <td>
+                    @if (editandoId() === f.id) {
+                      <input
+                        type="text"
+                        class="form-control input-edicion"
+                        [value]="editandoNombre()"
+                        (input)="editandoNombre.set($any($event.target).value)"
+                        (keydown.enter)="guardarEdicion(f.id)"
+                        (keydown.escape)="cancelarEdicion()"
+                      />
+                    } @else {
+                      {{ f.nombre }}
+                    }
+                  </td>
+
+                  <!-- Fecha -->
+                  <td class="col-fecha">
+                    @if (editandoId() === f.id) {
+                      <input
+                        type="date"
+                        class="form-control input-edicion"
+                        [value]="editandoFecha()"
+                        (input)="editandoFecha.set($any($event.target).value)"
+                        (keydown.enter)="guardarEdicion(f.id)"
+                        (keydown.escape)="cancelarEdicion()"
+                      />
+                    } @else {
+                      <span class="fecha-badge">{{ f.fecha }}</span>
+                    }
+                  </td>
+
+                  <!-- Acciones -->
+                  <td class="col-acciones">
+                    @if (editandoId() === f.id) {
+                      <button class="btn-accion btn-guardar" (click)="guardarEdicion(f.id)" title="Guardar">
+                        <i class="fa-solid fa-check"></i>
+                      </button>
+                      <button class="btn-accion btn-cancelar" (click)="cancelarEdicion()" title="Cancelar">
+                        <i class="fa-solid fa-xmark"></i>
+                      </button>
+                    } @else {
+                      <button class="btn-accion btn-editar" (click)="iniciarEdicion(f)" title="Editar">
+                        <i class="fa-solid fa-pen"></i>
+                      </button>
+                      <button class="btn-accion btn-eliminar" (click)="eliminarFestivo(f)" title="Eliminar">
+                        <i class="fa-solid fa-trash"></i>
+                      </button>
+                    }
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        }
+
+        <!-- Vacio -->
+        @if (!cargando() && festivos().length === 0) {
+          <div class="estado-vacio">
+            <i class="fa-solid fa-calendar-days"></i>
+            <p>No hay festivos registrados</p>
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,142 @@
+<div class="pagina-wrapper">
+  <!-- Banner superior -->
+  <div class="banner">
+    <div class="banner-contenido">
+      <div class="banner-icono">
+        <i class="fa-solid fa-user"></i>
+      </div>
+      <div class="banner-texto">
+        <h1 class="banner-titulo">Mi perfil</h1>
+        <p class="banner-descripcion">Tu informacion personal</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="contenido-pagina">
+
+    @if (cargando()) {
+      <div class="card">
+        <div class="card-body estado-vacio">
+          <span class="spinner-border spinner-border-sm me-2"></span>
+          Cargando perfil...
+        </div>
+      </div>
+    }
+
+    @if (!cargando() && perfil()) {
+      <div class="row">
+        <!-- Tarjeta con avatar -->
+        <div class="col-md-4 mb-3">
+          <div class="card">
+            <div class="card-body text-center">
+              <div class="avatar">
+                {{ inicial }}
+              </div>
+              <h5 class="mt-3 mb-1">{{ nombreCompleto }}</h5>
+              <p class="text-muted mb-1">{{ perfil()!.departamento }}</p>
+              <p class="text-muted mb-0" style="font-size: 13px;">{{ email }}</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-8">
+          <!-- Datos personales -->
+          <div class="card mb-3">
+            <div class="card-body">
+              <h3 class="seccion-titulo">
+                <i class="fa-solid fa-id-card me-2"></i>Datos personales
+              </h3>
+
+              <div class="fila-info">
+                <span class="etiqueta-info">Nombre</span>
+                <span class="info-valor">{{ nombreCompleto }}</span>
+              </div>
+
+              <div class="fila-info">
+                <span class="etiqueta-info">NIF</span>
+                <span class="info-valor">{{ perfil()!.nif }}</span>
+              </div>
+
+              <div class="fila-info">
+                <span class="etiqueta-info">Fecha de nacimiento</span>
+                <span class="info-valor">{{ perfil()!.fechaNacimiento | date:'dd/MM/yyyy' }}</span>
+              </div>
+
+              <div class="fila-info">
+                <span class="etiqueta-info">Telefono</span>
+                <span class="info-valor">{{ perfil()!.telefono || '—' }}</span>
+              </div>
+
+              <div class="fila-info">
+                <span class="etiqueta-info">Email</span>
+                <span class="info-valor">{{ email }}</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Direccion -->
+          <div class="card mb-3">
+            <div class="card-body">
+              <h3 class="seccion-titulo">
+                <i class="fa-solid fa-location-dot me-2"></i>Direccion
+              </h3>
+
+              <div class="fila-info">
+                <span class="etiqueta-info">Direccion</span>
+                <span class="info-valor">{{ perfil()!.direccion }}</span>
+              </div>
+
+              <div class="fila-info">
+                <span class="etiqueta-info">Localidad</span>
+                <span class="info-valor">{{ perfil()!.localidad }}</span>
+              </div>
+
+              <div class="fila-info">
+                <span class="etiqueta-info">Provincia</span>
+                <span class="info-valor">{{ perfil()!.provincia }}</span>
+              </div>
+
+              <div class="fila-info">
+                <span class="etiqueta-info">Codigo postal</span>
+                <span class="info-valor">{{ perfil()!.codigoPostal }}</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Datos laborales -->
+          <div class="card mb-3">
+            <div class="card-body">
+              <h3 class="seccion-titulo">
+                <i class="fa-solid fa-briefcase me-2"></i>Datos laborales
+              </h3>
+
+              <div class="fila-info">
+                <span class="etiqueta-info">Departamento</span>
+                <span class="info-valor">{{ perfil()!.departamento }}</span>
+              </div>
+
+              <div class="fila-info">
+                <span class="etiqueta-info">Numero S.S.</span>
+                <span class="info-valor">{{ perfil()!.numeroSs }}</span>
+              </div>
+
+              <div class="fila-info">
+                <span class="etiqueta-info">IBAN</span>
+                <span class="info-valor">{{ perfil()!.iban || '—' }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    }
+
+    @if (!cargando() && !perfil()) {
+      <div class="card">
+        <div class="card-body estado-vacio">
+          <i class="fa-solid fa-user-slash"></i>
+          <p>No se pudieron cargar los datos del perfil</p>
+        </div>
+      </div>
+    }
+  </div>
+</div>

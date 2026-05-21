@@ -1,0 +1,73 @@
+<div class="pagina-wrapper">
+  <!-- Banner superior -->
+  <div class="banner">
+    <div class="banner-contenido">
+      <div class="banner-icono">
+        <i class="fa-solid fa-users"></i>
+      </div>
+      <div class="banner-texto">
+        <h1 class="banner-titulo">Empleados</h1>
+        <p class="banner-descripcion">Listado de empleados de la empresa</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="contenido-pagina">
+    <div class="card">
+      <div class="card-body">
+        <div class="tabla-cabecera">
+          <div class="tabla-cabecera-izq">
+            <span class="tabla-titulo">Empleados</span>
+            <span class="contador">{{ empleados().length }}</span>
+          </div>
+          <a routerLink="/empleados/nuevo" class="btn btn-nuevo-empleado">
+            <i class="fa-solid fa-user-plus me-1"></i> Nuevo empleado
+          </a>
+        </div>
+
+        <!-- Cargando -->
+        @if (cargando()) {
+          <div class="estado-vacio">
+            <span class="spinner-border spinner-border-sm me-2"></span>
+            Cargando empleados...
+          </div>
+        }
+
+        <!-- Lista de empleados -->
+        @if (!cargando() && empleados().length > 0) {
+          <div class="empleados-lista">
+            @for (e of empleados(); track e.id) {
+              <div class="empleado-fila">
+                <!-- Avatar -->
+                <div class="empleado-avatar">
+                  {{ e.nombre.charAt(0).toUpperCase() }}
+                </div>
+
+                <!-- Info -->
+                <div class="empleado-info">
+                  <span class="empleado-nombre">{{ nombreCompleto(e) }}</span>
+                  <span class="empleado-departamento">
+                    <span class="departamento-badge">{{ e.departamento }}</span>
+                  </span>
+                </div>
+
+                <!-- Boton ver detalles -->
+                <a class="btn-ver-detalle" [routerLink]="['/empleados', e.id]" title="Ver detalles">
+                  <i class="fa-solid fa-eye me-1"></i> Ver detalles
+                </a>
+              </div>
+            }
+          </div>
+        }
+
+        <!-- Vacio -->
+        @if (!cargando() && empleados().length === 0) {
+          <div class="estado-vacio">
+            <i class="fa-solid fa-users"></i>
+            <p>No se encontraron empleados</p>
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+</div>

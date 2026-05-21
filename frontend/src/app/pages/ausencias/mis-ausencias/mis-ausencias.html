@@ -1,0 +1,73 @@
+<div class="pagina-wrapper">
+  <!-- Banner superior -->
+  <div class="banner">
+    <div class="banner-contenido">
+      <div class="banner-icono">
+        <i class="fa-solid fa-calendar-xmark"></i>
+      </div>
+      <div class="banner-texto">
+        <h1 class="banner-titulo">Mis ausencias</h1>
+        <p class="banner-descripcion">Historial de tus ausencias</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="contenido-pagina">
+    <div class="card">
+      <div class="card-body">
+        <div class="tabla-cabecera">
+          <span class="tabla-titulo">Historial</span>
+          <span class="contador">{{ ausencias().length }}</span>
+        </div>
+
+        <!-- Lista de ausencias -->
+        @if (ausencias().length > 0) {
+          <div class="ausencias-lista">
+            @for (a of ausencias(); track $index) {
+              <div class="ausencia-fila">
+                <!-- Icono segun tipo -->
+                <div class="ausencia-icono">
+                  <i class="fa-solid" [ngClass]="{
+                    'fa-umbrella-beach': a.tipo === 'vacaciones',
+                    'fa-stethoscope': a.tipo === 'medico',
+                    'fa-file-signature': a.tipo === 'permiso',
+                    'fa-ellipsis': a.tipo !== 'vacaciones' && a.tipo !== 'medico' && a.tipo !== 'permiso'
+                  }"></i>
+                </div>
+
+                <!-- Info -->
+                <div class="ausencia-info">
+                  <span class="ausencia-tipo">{{ a.tipo | titlecase }}</span>
+                  <span class="ausencia-fechas">
+                    {{ a.fechaInicio | date:'dd/MM/yyyy' }} — {{ a.fechaFin | date:'dd/MM/yyyy' }}
+                  </span>
+                </div>
+
+                <!-- Badge de estado -->
+                <span class="estado-badge" [ngClass]="{
+                  'estado-pendiente': a.estado === 'pendiente',
+                  'estado-aprobado': a.estado === 'aprobado',
+                  'estado-rechazado': a.estado === 'rechazado',
+                  'estado-anulado': a.estado === 'anulado'
+                }">
+                  <i class="fa-solid" [ngClass]="{
+                    'fa-clock': a.estado === 'pendiente',
+                    'fa-circle-check': a.estado === 'aprobado',
+                    'fa-circle-xmark': a.estado === 'rechazado',
+                    'fa-ban': a.estado === 'anulado'
+                  }"></i>
+                  {{ a.estado | titlecase }}
+                </span>
+              </div>
+            }
+          </div>
+        } @else {
+          <div class="estado-vacio">
+            <i class="fa-solid fa-calendar"></i>
+            <p>No tienes ausencias registradas</p>
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,87 @@
+<div class="pagina-wrapper">
+  <!-- Banner superior -->
+  <div class="banner">
+    <div class="banner-contenido">
+      <div class="banner-icono">
+        <i class="fa-solid fa-house-laptop"></i>
+      </div>
+      <div class="banner-texto">
+        <h1 class="banner-titulo">Mis teletrabajos</h1>
+        <p class="banner-descripcion">Historial de tus solicitudes de teletrabajo</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="contenido-pagina">
+    <div class="card">
+      <div class="card-body">
+        <div class="tabla-cabecera">
+          <span class="tabla-titulo">Historial</span>
+          <span class="teletrabajo-contador">{{ teletrabajos().length }}</span>
+        </div>
+
+        <!-- Cargando -->
+        @if (cargando()) {
+          <div class="teletrabajo-estado-vacio">
+            <span class="spinner-border spinner-border-sm me-2"></span>
+            Cargando teletrabajos...
+          </div>
+        }
+
+        <!-- Error -->
+        @if (!cargando() && error()) {
+          <div class="mensaje-estado mensaje-error mt-3">
+            <i class="fa-solid fa-circle-exclamation"></i>
+            <span>{{ error() }}</span>
+          </div>
+        }
+
+        <!-- Lista -->
+        @if (!cargando() && !error() && teletrabajos().length > 0) {
+          <div class="teletrabajo-lista">
+            @for (t of teletrabajos(); track t.id ?? $index) {
+              <div class="teletrabajo-fila">
+                <!-- Icono -->
+                <div class="teletrabajo-icono">
+                  <i class="fa-solid fa-house-laptop"></i>
+                </div>
+
+                <!-- Info -->
+                <div class="teletrabajo-info">
+                  <span class="teletrabajo-tipo">Teletrabajo</span>
+                  <span class="teletrabajo-fechas">
+                    {{ t.fechaInicio | date:'dd/MM/yyyy' }} — {{ t.fechaFin | date:'dd/MM/yyyy' }}
+                  </span>
+                </div>
+
+                <!-- Badge estado -->
+                <span class="teletrabajo-estado-badge" [ngClass]="{
+                  'estado-pendiente': t.estado === 'pendiente',
+                  'estado-aprobado': t.estado === 'aprobado',
+                  'estado-rechazado': t.estado === 'rechazado',
+                  'estado-anulado': t.estado === 'anulado'
+                }">
+                  <i class="fa-solid" [ngClass]="{
+                    'fa-clock': t.estado === 'pendiente',
+                    'fa-circle-check': t.estado === 'aprobado',
+                    'fa-circle-xmark': t.estado === 'rechazado',
+                    'fa-ban': t.estado === 'anulado'
+                  }"></i>
+                  {{ t.estado | titlecase }}
+                </span>
+              </div>
+            }
+          </div>
+        }
+
+        <!-- Vacío -->
+        @if (!cargando() && !error() && teletrabajos().length === 0) {
+          <div class="teletrabajo-estado-vacio">
+            <i class="fa-solid fa-house-laptop"></i>
+            <p>No tienes teletrabajos registrados</p>
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+</div>

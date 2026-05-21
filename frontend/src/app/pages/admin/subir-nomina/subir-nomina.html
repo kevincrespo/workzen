@@ -1,0 +1,72 @@
+<div class="pagina-wrapper">
+  <!-- Banner superior -->
+  <div class="banner">
+    <div class="banner-contenido">
+      <div class="banner-icono">
+        <i class="fa-solid fa-file-invoice-dollar"></i>
+      </div>
+      <div class="banner-texto">
+        <h1 class="banner-titulo">Subir nomina</h1>
+        <p class="banner-descripcion">Asigna una nomina en formato PDF a un empleado</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Formulario -->
+  <div class="contenido-pagina contenido-centrado">
+    <div class="card">
+      <div class="card-body">
+        <form [formGroup]="formulario" (ngSubmit)="onSubmit()">
+
+          <!-- Select de empleado -->
+          <div class="campo-grupo">
+            <label for="empleado" class="form-label">Empleado</label>
+            <select id="empleado" class="form-select" formControlName="empleadoId">
+              <option [ngValue]="null" disabled>Selecciona un empleado</option>
+              @if (empleados$ | async; as empleados) {
+                @for (emp of empleados; track emp.id) {
+                  <option [ngValue]="emp.id">{{ emp.nombre }} {{ emp.apellido1 }} {{ emp.apellido2 }}</option>
+                }
+              }
+            </select>
+          </div>
+
+          <!-- Input de fecha -->
+          <div class="campo-grupo">
+            <label for="fecha" class="form-label">Fecha de la nomina</label>
+            <input id="fecha" type="date" class="form-control" formControlName="fecha" />
+          </div>
+
+          <!-- Input de archivo -->
+          <div class="campo-grupo">
+            <label for="archivo" class="form-label">Archivo PDF</label>
+            <input
+              id="archivo"
+              type="file"
+              class="form-control"
+              accept=".pdf"
+              (change)="onArchivoSeleccionado($event)"
+            />
+          </div>
+
+          <!-- Mensaje de estado -->
+          @if (mensaje) {
+            <div class="mensaje-estado" [class.mensaje-exito]="!esError" [class.mensaje-error]="esError">
+              <i class="fa-solid" [class.fa-circle-check]="!esError" [class.fa-circle-exclamation]="esError"></i>
+              <span>{{ mensaje }}</span>
+            </div>
+          }
+
+          <!-- Boton de envio -->
+          <button type="submit" class="btn btn-primary w-100 btn-enviar" [disabled]="enviando">
+            @if (enviando) {
+              <span class="spinner-border spinner-border-sm me-1"></span> Subiendo...
+            } @else {
+              <i class="fa-solid fa-upload me-1"></i> Subir nomina
+            }
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

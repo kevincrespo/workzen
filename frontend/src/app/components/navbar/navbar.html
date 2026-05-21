@@ -1,0 +1,248 @@
+<button class="hamburguesa-btn" (click)="toggleMenu()">
+  <i class="fa-solid" [ngClass]="menuAbierto ? 'fa-xmark' : 'fa-bars'"></i>
+</button>
+@if (menuAbierto) {
+  <div class="menu-backdrop" (click)="cerrarMenu()"></div>
+}
+<nav class="navbar-lateral" [class.abierto]="menuAbierto">
+  <!-- Perfil del usuario -->
+  <div class="navbar-perfil">
+    <div class="perfil-avatar">{{ username.charAt(0).toUpperCase() }}</div>
+    <div class="perfil-info">
+      <span class="perfil-nombre">{{ username }}</span>
+      <span class="perfil-correo">{{ email }}</span>
+    </div>
+  </div>
+
+  <!-- Seccion principal -->
+  <div class="nav-seccion-label">Menu</div>
+  <ul class="navbar-enlaces">
+    <li>
+      <a routerLink="/home" routerLinkActive="active">
+        <span class="nav-icono"><i class="fa-solid fa-house"></i></span>
+        Home
+      </a>
+    </li>
+    <li class="nav-submenu">
+      <span class="nav-submenu-disparador">
+        <span class="nav-icono"><i class="fa-solid fa-folder-open"></i></span>
+        Documentos
+        <i class="fa-solid fa-chevron-right submenu-flecha"></i>
+      </span>
+      <ul class="submenu-desplegable">
+        <li>
+          <a routerLink="/nominas" routerLinkActive="active">
+            <i class="fa-solid fa-file-invoice-dollar me-2"></i> Nominas
+          </a>
+        </li>
+        <li>
+          <a routerLink="/certificados" routerLinkActive="active">
+            <i class="fa-solid fa-file-lines me-2"></i> Certificados
+          </a>
+        </li>
+        <li>
+          <a routerLink="/contratos" routerLinkActive="active">
+            <i class="fa-solid fa-file-contract me-2"></i> Contratos
+          </a>
+        </li>
+        <li>
+          <a routerLink="/documentacion" routerLinkActive="active">
+            <i class="fa-solid fa-book-open me-2"></i> Documentacion
+          </a>
+        </li>
+      </ul>
+    </li>
+    <li class="nav-submenu">
+      <span class="nav-submenu-disparador">
+        <span class="nav-icono"><i class="fa-solid fa-calendar-xmark"></i></span>
+        Ausencias
+        <i class="fa-solid fa-chevron-right submenu-flecha"></i>
+      </span>
+      <ul class="submenu-desplegable">
+        <li>
+          <a routerLink="/mis-ausencias" routerLinkActive="active">
+            <i class="fa-solid fa-list me-2"></i> Mis Ausencias
+          </a>
+        </li>
+        <li>
+          <a routerLink="/solicitar-ausencia" routerLinkActive="active">
+            <i class="fa-solid fa-calendar-plus me-2"></i> Solicitar Ausencia
+          </a>
+        </li>
+        <li>
+          <a routerLink="/justificantes" routerLinkActive="active">
+            <i class="fa-solid fa-file-medical me-2"></i> Justificantes
+          </a>
+        </li>
+      </ul>
+    </li>
+
+    <li class="nav-submenu">
+      <span class="nav-submenu-disparador">
+        <span class="nav-icono"><i class="fa-solid fa-house-laptop"></i></span>
+        Teletrabajo
+        <i class="fa-solid fa-chevron-right submenu-flecha"></i>
+      </span>
+      <ul class="submenu-desplegable">
+        <li>
+          <a routerLink="/mis-teletrabajos" routerLinkActive="active">
+            <i class="fa-solid fa-list me-2"></i> Mis Teletrabajos
+          </a>
+        </li>
+        <li>
+          <a routerLink="/solicitar-teletrabajo" routerLinkActive="active">
+            <i class="fa-solid fa-plus me-2"></i> Solicitar Teletrabajo
+          </a>
+        </li>
+      </ul>
+    </li>
+
+    <li class="nav-submenu">
+      <span class="nav-submenu-disparador">
+        <span class="nav-icono"><i class="fa-solid fa-utensils"></i></span>
+        Dietas
+        <i class="fa-solid fa-chevron-right submenu-flecha"></i>
+      </span>
+      <ul class="submenu-desplegable">
+        <li>
+          <a routerLink="/mis-dietas" routerLinkActive="active">
+            <i class="fa-solid fa-list me-2"></i> Mis Dietas
+          </a>
+        </li>
+        <li>
+          <a routerLink="/solicitar-dieta" routerLinkActive="active">
+            <i class="fa-solid fa-plus me-2"></i> Solicitar Dieta
+          </a>
+        </li>
+      </ul>
+    </li>
+    <li>
+      <a routerLink="/mis-fichajes" routerLinkActive="active">
+        <span class="nav-icono"><i class="fa-solid fa-clock"></i></span>
+        Fichajes
+      </a>
+    </li>
+    <li>
+      <a routerLink="/perfil" routerLinkActive="active">
+        <span class="nav-icono"><i class="fa-solid fa-user"></i></span>
+        Perfil
+      </a>
+    </li>
+    <li>
+      <a routerLink="/configuracion" routerLinkActive="active">
+        <span class="nav-icono"><i class="fa-solid fa-gear"></i></span>
+        Configuracion
+      </a>
+    </li>
+  </ul>
+
+  <!-- Seccion de administracion -->
+  @if (esAdminORecursosHumanos) {
+    <div class="nav-seccion-label">Administracion</div>
+    <ul class="navbar-enlaces">
+      <li class="nav-submenu">
+        <span class="nav-submenu-disparador">
+          <span class="nav-icono"><i class="fa-solid fa-file-arrow-up"></i></span>
+          Subir Documentos
+          <i class="fa-solid fa-chevron-right submenu-flecha"></i>
+        </span>
+        <ul class="submenu-desplegable">
+          <li>
+            <a routerLink="/subir-nomina" routerLinkActive="active">
+              <i class="fa-solid fa-file-invoice-dollar me-2"></i> Subir Nomina
+            </a>
+          </li>
+          <li>
+            <a routerLink="/subir-contrato" routerLinkActive="active">
+              <i class="fa-solid fa-file-circle-plus me-2"></i> Subir Contrato
+            </a>
+          </li>
+          <li>
+            <a routerLink="/subir-certificado" routerLinkActive="active">
+              <i class="fa-solid fa-file-lines me-2"></i> Subir Certificado
+            </a>
+          </li>
+          <li>
+            <a routerLink="/subir-documento" routerLinkActive="active">
+              <i class="fa-solid fa-folder-plus me-2"></i> Gestionar Docs
+            </a>
+          </li>
+        </ul>
+      </li>
+      <li class="nav-submenu">
+        <span class="nav-submenu-disparador">
+          <span class="nav-icono"><i class="fa-solid fa-clipboard-check"></i></span>
+          Solicitudes
+          <i class="fa-solid fa-chevron-right submenu-flecha"></i>
+        </span>
+        <ul class="submenu-desplegable">
+          <li>
+            <a routerLink="/gestionar-ausencias" routerLinkActive="active">
+              <i class="fa-solid fa-calendar-xmark me-2"></i> Ausencias
+            </a>
+          </li>
+          <li>
+            <a routerLink="/gestionar-teletrabajos" routerLinkActive="active">
+              <i class="fa-solid fa-house-laptop me-2"></i> Teletrabajos
+            </a>
+          </li>
+          <li>
+            <a routerLink="/gestionar-dietas" routerLinkActive="active">
+              <i class="fa-solid fa-utensils me-2"></i> Dietas
+            </a>
+          </li>
+        </ul>
+      </li>
+      <li class="nav-submenu">
+        <span class="nav-submenu-disparador">
+          <span class="nav-icono"><i class="fa-solid fa-magnifying-glass-chart"></i></span>
+          Consultas
+          <i class="fa-solid fa-chevron-right submenu-flecha"></i>
+        </span>
+        <ul class="submenu-desplegable">
+          <li>
+            <a routerLink="/gestionar-fichajes" routerLinkActive="active">
+              <i class="fa-solid fa-clock me-2"></i> Fichajes
+            </a>
+          </li>
+          <li>
+            <a routerLink="/gestionar-justificantes" routerLinkActive="active">
+              <i class="fa-solid fa-file-medical me-2"></i> Justificantes
+            </a>
+          </li>
+        </ul>
+      </li>
+      <li class="nav-submenu">
+        <span class="nav-submenu-disparador">
+          <span class="nav-icono"><i class="fa-solid fa-building"></i></span>
+          Empresa
+          <i class="fa-solid fa-chevron-right submenu-flecha"></i>
+        </span>
+        <ul class="submenu-desplegable">
+          <li>
+            <a routerLink="/empleados" routerLinkActive="active">
+              <i class="fa-solid fa-users me-2"></i> Empleados
+            </a>
+          </li>
+          <li>
+            <a routerLink="/departamentos" routerLinkActive="active">
+              <i class="fa-solid fa-building me-2"></i> Departamentos
+            </a>
+          </li>
+          <li>
+            <a routerLink="/festivos" routerLinkActive="active">
+              <i class="fa-solid fa-calendar-days me-2"></i> Festivos
+            </a>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  }
+
+  <!-- Cerrar sesion -->
+  <div class="navbar-pie">
+    <button class="btn-cerrar-sesion" (click)="logout()">
+      <i class="fa-solid fa-right-from-bracket"></i> Cerrar sesion
+    </button>
+  </div>
+</nav>

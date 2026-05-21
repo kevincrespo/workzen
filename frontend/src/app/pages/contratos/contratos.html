@@ -1,0 +1,126 @@
+<div class="pagina-wrapper">
+  <!-- Banner superior -->
+  <div class="banner">
+    <div class="banner-contenido">
+      <div class="banner-icono">
+        <i class="fa-solid fa-file-contract"></i>
+      </div>
+      <div class="banner-texto">
+        <h1 class="banner-titulo">Mis contratos</h1>
+        <p class="banner-descripcion">Consulta tus contratos</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="contenido-pagina">
+    <div class="card">
+      <div class="card-body">
+
+        <!-- Filtros (solo admin y rrhh) -->
+        @if (esAdminORecursosHumanos) {
+          <div class="filtros-panel">
+
+            <!-- Filtro por nombre -->
+            <div class="filtro-grupo">
+              <label class="filtro-label">Empleado</label>
+              <div class="filtro-input-btn">
+                <input
+                  type="text"
+                  class="filtro-input"
+                  placeholder="Nombre del empleado..."
+                  [(ngModel)]="filtroNombre"
+                  (keyup.enter)="buscarPorNombre()"
+                />
+                <button class="btn-filtrar" (click)="buscarPorNombre()">
+                  <i class="fa-solid fa-magnifying-glass"></i>
+                </button>
+              </div>
+            </div>
+
+            <!-- Filtro por tipo -->
+            <div class="filtro-grupo">
+              <label class="filtro-label">Tipo</label>
+              <select class="filtro-select" [(ngModel)]="filtroTipo" (change)="buscarPorTipo()">
+                <option value="">Todos</option>
+                @for (tipo of tiposContrato; track tipo) {
+                  <option [value]="tipo">{{ tipo }}</option>
+                }
+              </select>
+            </div>
+
+            <!-- Filtro por departamento -->
+            <div class="filtro-grupo">
+              <label class="filtro-label">Departamento</label>
+              <select class="filtro-select" [(ngModel)]="filtroDepartamentoId" (change)="buscarPorDepartamento()">
+                <option [ngValue]="null">Todos</option>
+                @for (dep of departamentos(); track dep.id) {
+                  <option [ngValue]="dep.id">{{ dep.nombre }}</option>
+                }
+              </select>
+            </div>
+
+            <!-- Filtro por rango de fechas -->
+            <div class="filtro-grupo">
+              <label class="filtro-label">Desde</label>
+              <input type="date" class="filtro-input" [(ngModel)]="filtroFechaDesde" />
+            </div>
+
+            <div class="filtro-grupo">
+              <label class="filtro-label">Hasta</label>
+              <input type="date" class="filtro-input" [(ngModel)]="filtroFechaHasta" />
+            </div>
+
+            <div class="filtro-grupo filtro-acciones">
+              <button class="btn-buscar-fechas" (click)="buscarPorFechas()">
+                <i class="fa-solid fa-calendar-days"></i> Buscar
+              </button>
+              <button class="btn-limpiar" (click)="limpiarFiltros()">
+                <i class="fa-solid fa-xmark"></i> Limpiar
+              </button>
+            </div>
+
+          </div>
+        }
+
+        <!-- Lista de contratos -->
+        @if (contratos() && contratos()!.length > 0) {
+          <div class="contratos-lista">
+            @for (c of contratos()!; track c.id) {
+              <div class="contrato-fila">
+                <div class="contrato-icono">
+                  <i class="fa-solid fa-file-pdf"></i>
+                </div>
+                <div class="contrato-info">
+                  <span class="contrato-empleado">
+                    {{ c.empleado?.nombre }} {{ c.empleado?.apellido1 }} {{ c.empleado?.apellido2 }}
+                  </span>
+                  <span class="contrato-tipo">{{ c.tipo }}</span>
+                  <span class="contrato-fecha">{{ c.fecha | date:'dd/MM/yyyy' }}</span>
+                </div>
+                <div class="contrato-acciones">
+                  <button class="btn-ver" (click)="ver(c)">
+                    <i class="fa-solid fa-eye"></i> Ver
+                  </button>
+                  <button class="btn-descargar" (click)="descargar(c)">
+                    <i class="fa-solid fa-download"></i> Descargar
+                  </button>
+                  @if (esAdminORecursosHumanos) {
+                    <button class="btn-eliminar" (click)="eliminar(c)">
+                      <i class="fa-solid fa-trash"></i>
+                    </button>
+                  }
+                </div>
+              </div>
+            }
+          </div>
+        } @else {
+          <div class="contratos-vacio">
+            <i class="fa-solid fa-folder-open"></i>
+            <p>No hay contratos disponibles</p>
+          </div>
+        }
+
+      </div>
+    </div>
+  </div>
+</div>

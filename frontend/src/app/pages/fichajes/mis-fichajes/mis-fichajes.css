@@ -1,0 +1,252 @@
+/* Selector de mes */
+.selector-mes {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.btn-mes {
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  border: 1px solid #e8edf3;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  color: var(--color-text-light);
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.btn-mes:hover {
+  background: var(--color-secondary);
+  color: white;
+  border-color: var(--color-secondary);
+}
+
+.mes-label {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--color-text);
+  min-width: 160px;
+  text-align: center;
+}
+
+/* Contador */
+.contador {
+  font-size: 13px;
+  font-weight: 600;
+  background: rgba(20, 184, 166, 0.08);
+  color: var(--color-secondary);
+  padding: 4px 10px;
+  border-radius: 20px;
+}
+
+/* Lista */
+.fichajes-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.fichaje-item {
+  border-radius: 10px;
+  border: 1px solid #e8edf3;
+  overflow: hidden;
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+  box-shadow: var(--sombra-nivel-1);
+}
+
+.fichaje-item:hover {
+  box-shadow: var(--sombra-nivel-2);
+  transform: translateY(-1px);
+}
+
+.fichaje-item.expandido {
+  border-color: var(--color-secondary);
+  box-shadow: 0 2px 12px rgba(20, 184, 166, 0.12);
+}
+
+.fichaje-fila {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 16px;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.fichaje-fila:hover {
+  background-color: rgba(20, 184, 166, 0.03);
+}
+
+/* Icono */
+.fichaje-icono {
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  background: rgba(20, 184, 166, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-secondary);
+  font-size: 17px;
+  flex-shrink: 0;
+}
+
+/* Info */
+.fichaje-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.fichaje-fecha {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-text);
+  text-transform: capitalize;
+}
+
+.fichaje-horas {
+  font-size: 13px;
+  color: var(--color-text-light);
+}
+
+/* Resumen */
+.fichaje-resumen {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.fichaje-tiempo {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--color-text);
+  font-variant-numeric: tabular-nums;
+}
+
+.pausas-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  background: rgba(251, 146, 60, 0.1);
+  color: #c2410c;
+  padding: 2px 8px;
+  border-radius: 12px;
+}
+
+/* Estado */
+.estado-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 5px 12px;
+  border-radius: 20px;
+  flex-shrink: 0;
+}
+
+.estado-badge i {
+  font-size: 11px;
+}
+
+.estado-finalizado {
+  background: rgba(52, 211, 153, 0.1);
+  color: #065f46;
+}
+
+.estado-activo {
+  background: rgba(251, 146, 60, 0.1);
+  color: #c2410c;
+}
+
+/* Flecha expandir */
+.flecha-expandir {
+  font-size: 12px;
+  color: var(--color-text-light);
+  transition: transform 0.2s ease;
+  flex-shrink: 0;
+}
+
+.flecha-expandir.rotado {
+  transform: rotate(180deg);
+}
+
+/* Pausas detalle */
+.pausas-detalle {
+  padding: 0 16px 14px 74px;
+}
+
+.pausas-titulo {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-text-light);
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.pausas-titulo i {
+  font-size: 10px;
+  color: #c2410c;
+}
+
+.pausa-fila {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 12px;
+  background: rgba(251, 146, 60, 0.04);
+  border-radius: 6px;
+  margin-bottom: 4px;
+}
+
+.pausa-horas {
+  font-size: 13px;
+  color: var(--color-text);
+  font-variant-numeric: tabular-nums;
+}
+
+.pausa-duracion {
+  font-size: 12px;
+  font-weight: 600;
+  color: #c2410c;
+}
+
+.pausas-vacio {
+  font-size: 13px;
+  color: var(--color-text-light);
+  font-style: italic;
+}
+
+/* Estado vacio */
+.estado-vacio {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--color-text-light);
+  font-size: 14px;
+}
+
+.estado-vacio i {
+  font-size: 36px;
+  margin-bottom: 12px;
+  opacity: 0.4;
+  display: block;
+}
+
+.estado-vacio p {
+  margin: 0;
+}

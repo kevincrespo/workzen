@@ -1,0 +1,34 @@
+# Backend / Maven
+backend/target/
+backend/.mvn/wrapper/maven-wrapper.jar
+
+# Frontend / Angular
+frontend/node_modules/
+frontend/dist/
+frontend/.angular/
+
+# Logs
+*.log
+
+# Eclipse / STS
+.metadata/
+.classpath
+.project
+.settings/
+.factorypath
+
+# VS Code
+.vscode/
+
+# Sistema
+.DS_Store
+Thumbs.db
+
+# Variables de entorno
+.env
+*.env
+
+# Configuración local con contraseñas
+backend/src/main/resources/application-local.properties
+backend/src/main/resources/application-dev.properties
+

@@ -1,0 +1,669 @@
+/* Tarjetas de estadisticas */
+.tarjeta-estadistica {
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  box-shadow: var(--sombra-nivel-2);
+}
+
+.tarjeta-estadistica:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--sombra-nivel-4);
+}
+
+/* Borde izquierdo por color de icono */
+.tarjeta-estadistica:has(.icono-estadistica-azul) {
+  border-left-color: var(--color-secondary);
+}
+
+.tarjeta-estadistica:has(.icono-estadistica-naranja) {
+  border-left-color: var(--color-accent);
+}
+
+.tarjeta-estadistica:has(.icono-estadistica-slate) {
+  border-left-color: var(--color-primary);
+}
+
+.icono-estadistica {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  margin-bottom: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.icono-estadistica-azul {
+  background: rgba(20, 184, 166, 0.1);
+  color: var(--color-secondary);
+}
+
+.icono-estadistica-naranja {
+  background: rgba(251, 146, 60, 0.1);
+  color: var(--color-accent);
+}
+
+.icono-estadistica-slate {
+  background: rgba(30, 41, 59, 0.1);
+  color: var(--color-primary);
+}
+
+.numero-estadistica {
+  font-size: 36px;
+  font-weight: 700;
+  color: var(--color-text);
+  margin: 0;
+}
+
+.etiqueta-estadistica {
+  font-size: 14px;
+  color: var(--color-text-light);
+  margin: 0;
+}
+
+/* ============================
+   Notificaciones
+   ============================ */
+.tarjeta-notificaciones {
+  box-shadow: var(--sombra-nivel-2);
+}
+
+.notificaciones-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.btn-marcar-leidas {
+  background: none;
+  border: none;
+  color: var(--color-secondary);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 4px 10px;
+  border-radius: 6px;
+  transition: background-color 0.15s ease;
+}
+
+.btn-marcar-leidas:hover {
+  background: rgba(20, 184, 166, 0.1);
+}
+
+.notificaciones-cargando {
+  text-align: center;
+  padding: 24px;
+  color: var(--color-text-light);
+  font-size: 14px;
+}
+
+.notificaciones-vacio {
+  text-align: center;
+  padding: 32px 16px;
+  color: var(--color-text-light);
+}
+
+.notificaciones-vacio i {
+  font-size: 32px;
+  margin-bottom: 8px;
+  opacity: 0.4;
+}
+
+.notificaciones-vacio p {
+  margin: 0;
+  font-size: 14px;
+}
+
+.notificacion-elemento {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid #eef2f7;
+}
+
+.notificacion-elemento:last-child {
+  border-bottom: none;
+}
+
+.notificacion-no-leida {
+  background: rgba(20, 184, 166, 0.04);
+  margin: 0 -16px;
+  padding: 12px 16px;
+  border-radius: 6px;
+}
+
+.notificacion-icono {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  flex-shrink: 0;
+  background: rgba(20, 184, 166, 0.1);
+  color: var(--color-secondary);
+}
+
+.notificacion-contenido {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.notificacion-mensaje {
+  font-size: 14px;
+  color: var(--color-text);
+  line-height: 1.4;
+}
+
+.notificacion-fecha {
+  font-size: 12px;
+  color: var(--color-text-light);
+}
+
+/* ============================
+   Bloque de fichaje
+   ============================ */
+.tarjeta-fichaje {
+  box-shadow: var(--sombra-nivel-2);
+}
+
+.fichaje-cargando {
+  text-align: center;
+  padding: 24px;
+  color: var(--color-text-light);
+  font-size: 14px;
+}
+
+/* Estado */
+.fichaje-estado {
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.fichaje-estado-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 6px 16px;
+  border-radius: 20px;
+  letter-spacing: 0.3px;
+}
+
+.estado-sin-fichar {
+  background: rgba(100, 116, 139, 0.1);
+  color: #475569;
+}
+
+.estado-fichando {
+  background: rgba(52, 211, 153, 0.1);
+  color: #065f46;
+}
+
+.estado-en-pausa {
+  background: rgba(251, 146, 60, 0.1);
+  color: #c2410c;
+}
+
+/* Contadores */
+.fichaje-contadores {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  margin-bottom: 20px;
+}
+
+.fichaje-contador-principal,
+.fichaje-contador-pausa {
+  text-align: center;
+}
+
+.fichaje-contador-label {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--color-text-light);
+  margin-bottom: 4px;
+}
+
+.fichaje-contador-valor {
+  font-size: 40px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-text);
+  line-height: 1;
+}
+
+.contador-activo {
+  color: #065f46;
+}
+
+.contador-pausado {
+  color: #94a3b8;
+}
+
+.contador-pausa {
+  color: #c2410c;
+  font-size: 32px;
+}
+
+/* Botones de fichaje */
+.fichaje-acciones {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+
+.btn-fichaje {
+  font-size: 14px;
+  font-weight: 600;
+  padding: 10px 24px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.btn-fichaje:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(0,0,0,0.15);
+}
+
+.btn-fichaje:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.btn-fichaje:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-iniciar {
+  background: #065f46;
+  color: white;
+}
+
+.btn-iniciar:hover:not(:disabled) {
+  background: #064e3b;
+  color: white;
+}
+
+.btn-pausar {
+  background: rgba(251, 146, 60, 0.15);
+  color: #c2410c;
+}
+
+.btn-pausar:hover:not(:disabled) {
+  background: rgba(251, 146, 60, 0.25);
+  color: #c2410c;
+}
+
+.btn-reanudar {
+  background: rgba(52, 211, 153, 0.15);
+  color: #065f46;
+}
+
+.btn-reanudar:hover:not(:disabled) {
+  background: rgba(52, 211, 153, 0.25);
+  color: #065f46;
+}
+
+.btn-finalizar {
+  background: rgba(229, 62, 62, 0.1);
+  color: #c53030;
+}
+
+.btn-finalizar:hover:not(:disabled) {
+  background: rgba(229, 62, 62, 0.2);
+  color: #c53030;
+}
+
+/* ============================
+   Calendario semanal
+   ============================ */
+.tarjeta-calendario {
+  box-shadow: var(--sombra-nivel-2);
+}
+
+.calendario-cabecera {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.calendario-titulo {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-text);
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  margin: 0;
+}
+
+.calendario-nav {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.btn-calendario-nav {
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border-radius: 8px;
+  border: 1px solid #dce3ed;
+  background: #f8fafc;
+  color: var(--color-text);
+  font-size: 12px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+  cursor: pointer;
+}
+
+.btn-calendario-nav:hover:not(:disabled) {
+  background: var(--color-secondary);
+  border-color: var(--color-secondary);
+  color: white;
+}
+
+.btn-calendario-nav:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.btn-calendario-hoy {
+  height: 32px;
+  padding: 0 14px;
+  border-radius: 8px;
+  border: 1px solid var(--color-secondary);
+  background: transparent;
+  color: var(--color-secondary);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.btn-calendario-hoy:hover:not(:disabled) {
+  background: var(--color-secondary);
+  color: white;
+}
+
+.btn-calendario-hoy:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.calendario-cargando {
+  text-align: center;
+  padding: 24px;
+  color: var(--color-text-light);
+  font-size: 14px;
+}
+
+/* Grid de 7 columnas */
+.calendario-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 1px;
+  background: #eef2f7;
+  border: 1px solid #eef2f7;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.calendario-dia {
+  background: white;
+  min-height: 100px;
+  display: flex;
+  flex-direction: column;
+}
+
+.calendario-dia-hoy {
+  background: rgba(20, 184, 166, 0.04);
+}
+
+.calendario-dia-cabecera {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 8px 4px 4px;
+  gap: 2px;
+}
+
+.calendario-dia-nombre {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--color-text-light);
+}
+
+.calendario-dia-numero {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--color-text);
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+.numero-hoy {
+  background: var(--color-secondary);
+  color: white;
+}
+
+.calendario-dia-eventos {
+  flex: 1;
+  padding: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  overflow-y: auto;
+}
+
+/* Chips de eventos */
+.calendario-chip {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 6px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  cursor: default;
+}
+
+.chip-ausencia {
+  background: rgba(251, 146, 60, 0.12);
+  color: #c2410c;
+}
+
+.chip-teletrabajo {
+  background: rgba(99, 102, 241, 0.1);
+  color: #4338ca;
+}
+
+.chip-festivo {
+  background: rgba(239, 68, 68, 0.1);
+  color: #b91c1c;
+}
+
+.chip-avatar {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: 700;
+  flex-shrink: 0;
+  color: white;
+}
+
+.chip-ausencia .chip-avatar {
+  background: #fb923c;
+}
+
+.chip-teletrabajo .chip-avatar {
+  background: #6366f1;
+}
+
+.chip-festivo .chip-avatar {
+  background: #ef4444;
+  font-size: 8px;
+}
+
+.chip-nombre {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Leyenda */
+.calendario-leyenda {
+  display: flex;
+  gap: 20px;
+  justify-content: flex-end;
+  margin-top: 10px;
+  padding-top: 8px;
+}
+
+.leyenda-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--color-text-light);
+}
+
+.leyenda-color {
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+}
+
+.leyenda-ausencia {
+  background: #fb923c;
+}
+
+.leyenda-teletrabajo {
+  background: #6366f1;
+}
+
+.leyenda-festivo {
+  background: #ef4444;
+}
+
+/* Responsive — Pantallas de portatil */
+@media (max-width: 1366px) {
+  .icono-estadistica {
+    width: 40px;
+    height: 40px;
+    font-size: 17px;
+    margin-bottom: 8px;
+  }
+
+  .numero-estadistica {
+    font-size: 28px;
+  }
+
+  .etiqueta-estadistica {
+    font-size: 13px;
+  }
+
+  .fichaje-contador-valor {
+    font-size: 32px;
+  }
+
+  .contador-pausa {
+    font-size: 26px;
+  }
+
+  .fichaje-contadores {
+    gap: 28px;
+    margin-bottom: 16px;
+  }
+
+  .fichaje-estado {
+    margin-bottom: 12px;
+  }
+
+  .btn-fichaje {
+    padding: 8px 20px;
+    font-size: 13px;
+  }
+
+  .calendario-dia {
+    min-height: 85px;
+  }
+
+  .calendario-dia-numero {
+    font-size: 16px;
+    width: 28px;
+    height: 28px;
+  }
+
+  .calendario-chip {
+    font-size: 10px;
+    padding: 2px 4px;
+  }
+
+  .chip-avatar {
+    width: 16px;
+    height: 16px;
+    font-size: 9px;
+  }
+}
+
+/* Responsive — Movil */
+@media (max-width: 768px) {
+  .calendario-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .calendario-dia {
+    min-height: auto;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+  }
+
+  .calendario-dia-cabecera {
+    flex-direction: row;
+    gap: 6px;
+    padding: 0;
+    min-width: 70px;
+  }
+
+  .calendario-dia-eventos {
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding: 0;
+  }
+
+  .calendario-cabecera {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+}

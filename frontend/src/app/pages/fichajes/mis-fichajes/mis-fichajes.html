@@ -1,0 +1,124 @@
+<div class="pagina-wrapper">
+  <!-- Banner superior -->
+  <div class="banner">
+    <div class="banner-contenido">
+      <div class="banner-icono">
+        <i class="fa-solid fa-clock"></i>
+      </div>
+      <div class="banner-texto">
+        <h1 class="banner-titulo">Mis fichajes</h1>
+        <p class="banner-descripcion">Historial de tus registros de jornada</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="contenido-pagina">
+    <div class="card">
+      <div class="card-body">
+        <!-- Selector de mes -->
+        <div class="selector-mes">
+          <button class="btn-mes" (click)="mesAnterior()">
+            <i class="fa-solid fa-chevron-left"></i>
+          </button>
+          <span class="mes-label">{{ nombreMes() }}</span>
+          <button class="btn-mes" (click)="mesSiguiente()">
+            <i class="fa-solid fa-chevron-right"></i>
+          </button>
+        </div>
+
+        <div class="tabla-cabecera">
+          <span class="tabla-titulo">Fichajes</span>
+          <span class="contador">{{ fichajes().length }}</span>
+        </div>
+
+        <!-- Cargando -->
+        @if (cargando()) {
+          <div class="estado-vacio">
+            <span class="spinner-border spinner-border-sm me-2"></span>
+            Cargando fichajes...
+          </div>
+        }
+
+        <!-- Lista -->
+        @if (!cargando() && fichajes().length > 0) {
+          <div class="fichajes-lista">
+            @for (f of fichajes(); track f.id) {
+              <div class="fichaje-item" [class.expandido]="fichajeExpandido() === f.id">
+                <div class="fichaje-fila" (click)="toggleExpandir(f.id)">
+                  <!-- Icono -->
+                  <div class="fichaje-icono">
+                    <i class="fa-solid fa-clock"></i>
+                  </div>
+
+                  <!-- Info -->
+                  <div class="fichaje-info">
+                    <span class="fichaje-fecha">{{ formatearFecha(f.fechaEntrada) }}</span>
+                    <span class="fichaje-horas">
+                      {{ formatearHora(f.fechaEntrada) }} — {{ formatearHora(f.fechaSalida) }}
+                    </span>
+                  </div>
+
+                  <!-- Tiempo y pausas -->
+                  <div class="fichaje-resumen">
+                    <span class="fichaje-tiempo">{{ calcularTiempoTrabajado(f) }}</span>
+                    @if (f.pausas.length > 0) {
+                      <span class="pausas-badge">
+                        <i class="fa-solid fa-pause"></i> {{ f.pausas.length }}
+                      </span>
+                    }
+                  </div>
+
+                  <!-- Estado -->
+                  <span class="estado-badge" [ngClass]="{
+                    'estado-finalizado': f.estado === 'finalizado',
+                    'estado-activo': f.estado === 'activo'
+                  }">
+                    <i class="fa-solid" [ngClass]="{
+                      'fa-circle-check': f.estado === 'finalizado',
+                      'fa-circle-dot': f.estado === 'activo'
+                    }"></i>
+                    {{ f.estado === 'finalizado' ? 'Finalizado' : 'En curso' }}
+                  </span>
+
+                  <!-- Flecha expandir -->
+                  <i class="fa-solid fa-chevron-down flecha-expandir"
+                     [class.rotado]="fichajeExpandido() === f.id"></i>
+                </div>
+
+                <!-- Pausas expandidas -->
+                @if (fichajeExpandido() === f.id && f.pausas.length > 0) {
+                  <div class="pausas-detalle">
+                    <div class="pausas-titulo">
+                      <i class="fa-solid fa-pause"></i> Pausas ({{ f.pausas.length }})
+                    </div>
+                    @for (p of f.pausas; track p.id) {
+                      <div class="pausa-fila">
+                        <span class="pausa-horas">
+                          {{ formatearHora(p.horaInicio) }} — {{ formatearHora(p.horaFin) }}
+                        </span>
+                        <span class="pausa-duracion">{{ calcularDuracionPausa(p) }}</span>
+                      </div>
+                    }
+                  </div>
+                }
+                @if (fichajeExpandido() === f.id && f.pausas.length === 0) {
+                  <div class="pausas-detalle">
+                    <div class="pausas-vacio">Sin pausas registradas</div>
+                  </div>
+                }
+              </div>
+            }
+          </div>
+        }
+
+        <!-- Vacio -->
+        @if (!cargando() && fichajes().length === 0) {
+          <div class="estado-vacio">
+            <i class="fa-solid fa-clock"></i>
+            <p>No hay fichajes en este mes</p>
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+</div>

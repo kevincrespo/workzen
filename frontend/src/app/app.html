@@ -1,0 +1,17 @@
+@if (isLogged) {
+  <div class="app-layout">
+    <app-navbar />
+    <div class="app-content">
+      <main>
+        <router-outlet />
+      </main>
+      <footer class="app-footer">
+        <span>&copy; 2026 WorkZen — Portal del empleado</span>
+      </footer>
+    </div>
+  </div>
+} @else {
+  <main>
+    <router-outlet />
+  </main>
+}

@@ -1,0 +1,91 @@
+<div class="app-container">
+  <!-- Sidebar de navegación -->
+  <nav class="sidebar">
+    <!-- Fondo decorativo con gradiente sutil -->
+    <div class="sidebar-bg"></div>
+
+    <!-- Cabecera con logo -->
+    <div class="sidebar-header">
+      <div class="sidebar-logo">
+        <i class="fa-solid fa-briefcase"></i>
+      </div>
+      <div class="sidebar-brand">
+        <span class="sidebar-title">WorkZen</span>
+        <span class="sidebar-subtitle">Portal Empleados</span>
+      </div>
+    </div>
+
+    <!-- Tarjeta de usuario -->
+    <div class="user-card">
+      <div class="user-avatar">
+        <span>{{ username.charAt(0).toUpperCase() }}</span>
+        <div class="avatar-status"></div>
+      </div>
+      <div class="user-info">
+        <span class="user-name">{{ username }}</span>
+        <span class="user-role">Empleado</span>
+      </div>
+      <button class="user-menu-btn" title="Opciones">
+        <i class="fa-solid fa-ellipsis-vertical"></i>
+      </button>
+    </div>
+
+    <!-- Etiqueta de sección -->
+    <div class="nav-label">Menú principal</div>
+
+    <!-- Links de navegación -->
+    <ul class="sidebar-nav">
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/home" routerLinkActive="active">
+          <span class="nav-icon">
+            <i class="fa-solid fa-house"></i>
+          </span>
+          <span class="nav-text">Inicio</span>
+          <span class="nav-indicator"></span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/nominas" routerLinkActive="active">
+          <span class="nav-icon">
+            <i class="fa-solid fa-file-invoice-dollar"></i>
+          </span>
+          <span class="nav-text">Nóminas</span>
+          <span class="nav-indicator"></span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/ausencias" routerLinkActive="active">
+          <span class="nav-icon">
+            <i class="fa-solid fa-calendar-days"></i>
+          </span>
+          <span class="nav-text">Ausencias</span>
+          <span class="nav-indicator"></span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/perfil" routerLinkActive="active">
+          <span class="nav-icon">
+            <i class="fa-solid fa-user"></i>
+          </span>
+          <span class="nav-text">Mi perfil</span>
+          <span class="nav-indicator"></span>
+        </a>
+      </li>
+    </ul>
+
+    <!-- Footer del sidebar -->
+    <div class="sidebar-footer">
+      <button class="logout-btn" (click)="logout()">
+        <span class="btn-icon">
+          <i class="fa-solid fa-right-from-bracket"></i>
+        </span>
+        <span class="btn-text">Cerrar sesión</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Contenido principal de la página -->
+  <main class="main-content">
+    <router-outlet></router-outlet>
+  </main>
+</div>

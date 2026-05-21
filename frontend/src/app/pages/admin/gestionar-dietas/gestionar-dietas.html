@@ -1,0 +1,88 @@
+<div class="pagina-wrapper">
+  <!-- Banner superior -->
+  <div class="banner">
+    <div class="banner-contenido">
+      <div class="banner-icono">
+        <i class="fa-solid fa-clipboard-list"></i>
+      </div>
+      <div class="banner-texto">
+        <h1 class="banner-titulo">Gestionar dietas</h1>
+        <p class="banner-descripcion">Aprueba o rechaza las solicitudes de dieta pendientes</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="contenido-pagina">
+    <div class="card">
+      <div class="card-body">
+        <div class="tabla-cabecera">
+          <span class="tabla-titulo">Solicitudes pendientes</span>
+          <span class="contador">{{ dietasPendientes().length }}</span>
+        </div>
+
+        <!-- Cargando -->
+        @if (cargando()) {
+          <div class="estado-vacio">
+            <span class="spinner-border spinner-border-sm me-2"></span>
+            Cargando solicitudes...
+          </div>
+        }
+
+        <!-- Lista de solicitudes -->
+        @if (!cargando() && dietasPendientes().length > 0) {
+          <div class="solicitudes-lista">
+            @for (d of dietasPendientes(); track d.id) {
+              <div class="solicitud-fila" [class.procesando]="procesando() === d.id">
+                <!-- Avatar del empleado -->
+                <div class="solicitud-avatar">
+                  {{ d.empleado.nombre.charAt(0).toUpperCase() }}
+                </div>
+
+                <div class="solicitud-info">
+                  <span class="solicitud-nombre">{{ nombreCompleto(d) }}</span>
+                  <span class="solicitud-detalle">
+                    <span class="tipo-badge">{{ d.tipo | titlecase }}</span>
+                    <span class="solicitud-fechas">
+                      {{ d.fechaInicio | date:'dd/MM/yyyy' }} — {{ d.fechaFin | date:'dd/MM/yyyy' }}
+                    </span>
+                  </span>
+                  @if (d.motivo) {
+                    <span class="solicitud-motivo">{{ d.motivo }}</span>
+                  }
+                </div>
+
+                <!-- Acciones -->
+                <div class="solicitud-acciones">
+                  <button
+                    class="btn-accion btn-aprobar"
+                    (click)="aprobar(d)"
+                    [disabled]="procesando() === d.id"
+                    title="Aprobar"
+                  >
+                    <i class="fa-solid fa-check"></i>
+                  </button>
+                  <button
+                    class="btn-accion btn-rechazar"
+                    (click)="rechazar(d)"
+                    [disabled]="procesando() === d.id"
+                    title="Rechazar"
+                  >
+                    <i class="fa-solid fa-xmark"></i>
+                  </button>
+                </div>
+              </div>
+            }
+          </div>
+        }
+
+        <!-- Vacio -->
+        @if (!cargando() && dietasPendientes().length === 0) {
+          <div class="estado-vacio">
+            <i class="fa-solid fa-circle-check"></i>
+            <p>No hay solicitudes de dieta pendientes</p>
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+</div>

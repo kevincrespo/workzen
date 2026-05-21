@@ -1,0 +1,85 @@
+<div class="pagina-wrapper">
+  <!-- Banner superior -->
+  <div class="banner">
+    <div class="banner-contenido">
+      <div class="banner-icono">
+        <i class="fa-solid fa-clipboard-check"></i>
+      </div>
+      <div class="banner-texto">
+        <h1 class="banner-titulo">Gestionar ausencias</h1>
+        <p class="banner-descripcion">Aprueba o rechaza las solicitudes pendientes</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="contenido-pagina">
+    <div class="card">
+      <div class="card-body">
+        <div class="tabla-cabecera">
+          <span class="tabla-titulo">Solicitudes pendientes</span>
+          <span class="contador">{{ ausenciasPendientes().length }}</span>
+        </div>
+
+        <!-- Cargando -->
+        @if (cargando()) {
+          <div class="estado-vacio">
+            <span class="spinner-border spinner-border-sm me-2"></span>
+            Cargando solicitudes...
+          </div>
+        }
+
+        <!-- Lista de solicitudes -->
+        @if (!cargando() && ausenciasPendientes().length > 0) {
+          <div class="solicitudes-lista">
+            @for (a of ausenciasPendientes(); track a.id) {
+              <div class="solicitud-fila" [class.procesando]="procesando() === a.id">
+                <!-- Info del empleado -->
+                <div class="solicitud-avatar">
+                  {{ a.empleado.nombre.charAt(0).toUpperCase() }}
+                </div>
+
+                <div class="solicitud-info">
+                  <span class="solicitud-nombre">{{ nombreCompleto(a) }}</span>
+                  <span class="solicitud-detalle">
+                    <span class="tipo-badge">{{ a.tipo | titlecase }}</span>
+                    <span class="solicitud-fechas">
+                      {{ a.fechaInicio | date:'dd/MM/yyyy' }} — {{ a.fechaFin | date:'dd/MM/yyyy' }}
+                    </span>
+                  </span>
+                </div>
+
+                <!-- Acciones -->
+                <div class="solicitud-acciones">
+                  <button
+                    class="btn-accion btn-aprobar"
+                    (click)="aprobar(a)"
+                    [disabled]="procesando() === a.id"
+                    title="Aprobar"
+                  >
+                    <i class="fa-solid fa-check"></i>
+                  </button>
+                  <button
+                    class="btn-accion btn-rechazar"
+                    (click)="rechazar(a)"
+                    [disabled]="procesando() === a.id"
+                    title="Rechazar"
+                  >
+                    <i class="fa-solid fa-xmark"></i>
+                  </button>
+                </div>
+              </div>
+            }
+          </div>
+        }
+
+        <!-- Vacio -->
+        @if (!cargando() && ausenciasPendientes().length === 0) {
+          <div class="estado-vacio">
+            <i class="fa-solid fa-circle-check"></i>
+            <p>No hay solicitudes pendientes</p>
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+</div>

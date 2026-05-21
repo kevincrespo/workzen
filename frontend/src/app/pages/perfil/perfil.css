@@ -1,0 +1,80 @@
+/* Avatar del perfil */
+.avatar {
+  width: 100px;
+  height: 100px;
+  background: linear-gradient(135deg, var(--color-secondary), var(--color-primary));
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 40px;
+  font-weight: 500;
+  margin: 0 auto;
+  box-shadow:
+    0 4px 10px rgba(20,184,166,0.3),
+    0 8px 24px rgba(20,184,166,0.15),
+    0 16px 40px rgba(0,0,0,0.1);
+}
+
+/* Titulo de seccion */
+.seccion-titulo {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-text);
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid var(--color-secondary);
+}
+
+.seccion-titulo i {
+  color: var(--color-secondary);
+}
+
+/* Filas de informacion */
+.fila-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid #eef2f7;
+}
+
+.fila-info:last-child {
+  border-bottom: none;
+}
+
+.etiqueta-info {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--color-text-light);
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.info-valor {
+  font-size: 14px;
+  color: var(--color-text);
+  font-weight: 500;
+}
+
+/* Estado vacio */
+.estado-vacio {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--color-text-light);
+  font-size: 14px;
+}
+
+.estado-vacio i {
+  font-size: 36px;
+  margin-bottom: 12px;
+  opacity: 0.4;
+  display: block;
+}
+
+.estado-vacio p {
+  margin: 0;
+}

@@ -1,0 +1,258 @@
+<div class="pagina-wrapper">
+  <!-- Banner superior -->
+  <div class="banner">
+    <div class="banner-contenido">
+      <div class="banner-icono">
+        <i class="fa-solid fa-house"></i>
+      </div>
+      <div class="banner-texto">
+        <h1 class="banner-titulo">Panel de inicio</h1>
+        <p class="banner-descripcion">Bienvenido, {{ username }}</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="contenido-pagina">
+
+    <!-- Bloque de fichaje -->
+    <div class="card tarjeta-fichaje mb-3">
+      <div class="card-body">
+        @if (cargandoFichaje()) {
+          <div class="fichaje-cargando">
+            <span class="spinner-border spinner-border-sm me-2"></span>
+            Cargando fichaje...
+          </div>
+        } @else {
+
+          <!-- Estado actual -->
+          <div class="fichaje-estado">
+            <span class="fichaje-estado-badge" [ngClass]="{
+              'estado-sin-fichar': estadoFichaje() === 'sin_fichar',
+              'estado-fichando': estadoFichaje() === 'fichando',
+              'estado-en-pausa': estadoFichaje() === 'en_pausa'
+            }">
+              <i class="fa-solid" [ngClass]="{
+                'fa-circle-stop': estadoFichaje() === 'sin_fichar',
+                'fa-circle-play': estadoFichaje() === 'fichando',
+                'fa-circle-pause': estadoFichaje() === 'en_pausa'
+              }"></i>
+              @if (estadoFichaje() === 'sin_fichar') { Sin fichar }
+              @if (estadoFichaje() === 'fichando') { Fichando }
+              @if (estadoFichaje() === 'en_pausa') { En pausa }
+            </span>
+          </div>
+
+          <!-- Contadores -->
+          <div class="fichaje-contadores">
+            <!-- Contador principal de tiempo trabajado -->
+            <div class="fichaje-contador-principal">
+              <span class="fichaje-contador-label">Tiempo trabajado</span>
+              <span class="fichaje-contador-valor" [ngClass]="{
+                'contador-activo': estadoFichaje() === 'fichando',
+                'contador-pausado': estadoFichaje() === 'en_pausa'
+              }">
+                {{ tiempoTrabajado() }}
+              </span>
+            </div>
+
+            <!-- Contador de pausa (solo visible en pausa) -->
+            @if (estadoFichaje() === 'en_pausa') {
+              <div class="fichaje-contador-pausa">
+                <span class="fichaje-contador-label">Tiempo en pausa</span>
+                <span class="fichaje-contador-valor contador-pausa">
+                  {{ tiempoPausa() }}
+                </span>
+              </div>
+            }
+          </div>
+
+          <!-- Botones de accion -->
+          <div class="fichaje-acciones">
+            @if (estadoFichaje() === 'sin_fichar') {
+              <button class="btn btn-fichaje btn-iniciar"
+                      (click)="iniciarFichaje()"
+                      [disabled]="procesandoAccion()">
+                <i class="fa-solid fa-play me-2"></i> Iniciar fichaje
+              </button>
+            }
+
+            @if (estadoFichaje() === 'fichando') {
+              <button class="btn btn-fichaje btn-pausar"
+                      (click)="pausarFichaje()"
+                      [disabled]="procesandoAccion()">
+                <i class="fa-solid fa-pause me-2"></i> Pausar
+              </button>
+              <button class="btn btn-fichaje btn-finalizar"
+                      (click)="finalizarFichaje()"
+                      [disabled]="procesandoAccion()">
+                <i class="fa-solid fa-stop me-2"></i> Finalizar
+              </button>
+            }
+
+            @if (estadoFichaje() === 'en_pausa') {
+              <button class="btn btn-fichaje btn-reanudar"
+                      (click)="reanudarFichaje()"
+                      [disabled]="procesandoAccion()">
+                <i class="fa-solid fa-play me-2"></i> Reanudar
+              </button>
+              <button class="btn btn-fichaje btn-finalizar"
+                      (click)="finalizarFichaje()"
+                      [disabled]="procesandoAccion()">
+                <i class="fa-solid fa-stop me-2"></i> Finalizar
+              </button>
+            }
+          </div>
+        }
+      </div>
+    </div>
+
+    <!-- Tarjetas de estadisticas -->
+    <div class="row">
+      <div class="col-md-4 mb-3">
+        <div class="card tarjeta-estadistica">
+          <div class="card-body text-center">
+            <div class="icono-estadistica icono-estadistica-azul">
+              <i class="fa-solid fa-money-bill"></i>
+            </div>
+            <p class="numero-estadistica">{{ contarNominas$ | async }}</p>
+            <p class="etiqueta-estadistica">Nominas disponibles</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4 mb-3">
+        <div class="card tarjeta-estadistica">
+          <div class="card-body text-center">
+            <div class="icono-estadistica icono-estadistica-naranja">
+              <i class="fa-solid fa-calendar-xmark"></i>
+            </div>
+            <p class="numero-estadistica">{{ diasDisponibles() ?? '-' }}</p>
+            <p class="etiqueta-estadistica">Dias disponibles</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4 mb-3">
+        <div class="card tarjeta-estadistica">
+          <div class="card-body text-center">
+            <div class="icono-estadistica icono-estadistica-slate">
+              <i class="fa-solid fa-file-contract"></i>
+            </div>
+            <p class="numero-estadistica">{{ contratosActivos() ?? '-' }}</p>
+            <p class="etiqueta-estadistica">Contrato activo</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Calendario semanal -->
+    <div class="card tarjeta-calendario mb-3">
+      <div class="card-body">
+        <div class="calendario-cabecera">
+          <h6 class="calendario-titulo">
+            <i class="fa-solid fa-calendar-week me-2"></i>Calendario semanal
+          </h6>
+          <div class="calendario-nav">
+            <button class="btn btn-calendario-nav" (click)="semanaAnterior()" [disabled]="cargandoCalendario()">
+              <i class="fa-solid fa-chevron-left"></i>
+            </button>
+            <button class="btn btn-calendario-hoy" (click)="irAHoy()" [disabled]="cargandoCalendario()">
+              Hoy
+            </button>
+            <button class="btn btn-calendario-nav" (click)="semanaSiguiente()" [disabled]="cargandoCalendario()">
+              <i class="fa-solid fa-chevron-right"></i>
+            </button>
+          </div>
+        </div>
+
+        @if (cargandoCalendario()) {
+          <div class="calendario-cargando">
+            <span class="spinner-border spinner-border-sm me-2"></span>
+            Cargando calendario...
+          </div>
+        } @else if (diasSemana().length > 0) {
+          <div class="calendario-grid">
+            @for (dia of diasSemana(); track dia.fecha) {
+              <div class="calendario-dia" [ngClass]="{ 'calendario-dia-hoy': dia.esHoy }">
+                <div class="calendario-dia-cabecera">
+                  <span class="calendario-dia-nombre">{{ dia.nombre }}</span>
+                  <span class="calendario-dia-numero" [ngClass]="{ 'numero-hoy': dia.esHoy }">{{ dia.numero }}</span>
+                </div>
+                <div class="calendario-dia-eventos">
+                  @for (festivo of festivosDelDia(dia.fecha); track festivo.id) {
+                    <div class="calendario-chip chip-festivo" [title]="festivo.nombre">
+                      <span class="chip-avatar"><i class="fa-solid fa-star"></i></span>
+                      <span class="chip-nombre">{{ festivo.nombre }}</span>
+                    </div>
+                  }
+                  @for (evento of eventosDelDia(dia.fecha); track evento.empleadoNombre + evento.tipo) {
+                    <div class="calendario-chip" [ngClass]="{
+                      'chip-ausencia': evento.tipo === 'ausencia',
+                      'chip-teletrabajo': evento.tipo === 'teletrabajo'
+                    }" [title]="evento.empleadoNombre + ' — ' + evento.subtipo">
+                      <span class="chip-avatar">{{ evento.empleadoInicial }}</span>
+                      <span class="chip-nombre">{{ evento.empleadoNombre }}</span>
+                    </div>
+                  }
+                </div>
+              </div>
+            }
+          </div>
+
+          <div class="calendario-leyenda">
+            <span class="leyenda-item">
+              <span class="leyenda-color leyenda-festivo"></span> Festivo
+            </span>
+            <span class="leyenda-item">
+              <span class="leyenda-color leyenda-ausencia"></span> Ausencia
+            </span>
+            <span class="leyenda-item">
+              <span class="leyenda-color leyenda-teletrabajo"></span> Teletrabajo
+            </span>
+          </div>
+        }
+      </div>
+    </div>
+
+    <!-- Notificaciones -->
+    <div class="card tarjeta-notificaciones">
+      <div class="card-header notificaciones-header">
+        <span>
+          <i class="fa-solid fa-bell"></i> Notificaciones
+        </span>
+        @if (notificaciones().length > 0) {
+          <button class="btn-marcar-leidas" (click)="marcarTodasLeidas()">
+            <i class="fa-solid fa-check-double me-1"></i> Marcar todas como leidas
+          </button>
+        }
+      </div>
+      <div class="card-body">
+        @if (cargandoNotificaciones()) {
+          <div class="notificaciones-cargando">
+            <span class="spinner-border spinner-border-sm me-2"></span>
+            Cargando notificaciones...
+          </div>
+        } @else if (notificaciones().length === 0) {
+          <div class="notificaciones-vacio">
+            <i class="fa-solid fa-bell-slash"></i>
+            <p>No tienes notificaciones</p>
+          </div>
+        } @else {
+          <ul class="list-unstyled mb-0">
+            @for (notif of notificaciones(); track notif.id) {
+              <li class="notificacion-elemento" [class.notificacion-no-leida]="!notif.leida">
+                <span class="notificacion-icono">
+                  <i class="fa-solid" [ngClass]="iconoNotificacion(notif.tipo)"></i>
+                </span>
+                <div class="notificacion-contenido">
+                  <span class="notificacion-mensaje">{{ notif.mensaje }}</span>
+                  <span class="notificacion-fecha">{{ formatearFechaNotificacion(notif.fechaCreacion) }}</span>
+                </div>
+              </li>
+            }
+          </ul>
+        }
+      </div>
+    </div>
+  </div>
+</div>

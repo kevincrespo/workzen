@@ -1,0 +1,118 @@
+/* Filtro de tipo */
+.filtro-tipo {
+  max-width: 150px;
+  font-size: 13px;
+  padding: 6px 10px;
+  border: 1px solid #dce3ed;
+  border-radius: 8px;
+  background-color: #f8fafc;
+}
+
+/* Lista de documentos */
+.documentos-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.documento-fila {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 16px;
+  border-radius: 10px;
+  border: 1px solid #e8edf3;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+  box-shadow: var(--sombra-nivel-1);
+}
+
+.documento-fila:hover {
+  background-color: rgba(251, 146, 60, 0.04);
+  box-shadow: var(--sombra-nivel-2);
+  transform: translateY(-2px);
+}
+
+/* Icono del documento */
+.documento-icono {
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  background: rgba(20, 184, 166, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-secondary);
+  font-size: 17px;
+  flex-shrink: 0;
+}
+
+.documento-fila:hover .documento-icono {
+  background: rgba(251, 146, 60, 0.1);
+  color: var(--color-accent);
+}
+
+/* Info del documento */
+.documento-info {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.documento-nombre {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-text);
+}
+
+.tipo-badge {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  background: rgba(20, 184, 166, 0.08);
+  color: var(--color-secondary);
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+/* Boton de descarga */
+.btn-descargar {
+  background-color: transparent;
+  border: 1px solid var(--color-secondary);
+  color: var(--color-secondary-dark);
+  font-size: 13px;
+  font-weight: 500;
+  border-radius: 8px;
+  padding: 6px 14px;
+  transition: background-color 0.15s ease, color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  flex-shrink: 0;
+}
+
+.btn-descargar:hover {
+  background-color: var(--color-accent);
+  color: white;
+  box-shadow: 0 3px 10px rgba(251,146,60,0.3);
+  transform: translateY(-1px);
+}
+
+/* Estado vacio / cargando */
+.estado-vacio {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--color-text-light);
+  font-size: 14px;
+}
+
+.estado-vacio i {
+  font-size: 36px;
+  margin-bottom: 12px;
+  opacity: 0.4;
+  display: block;
+}
+
+.estado-vacio p {
+  margin: 0;
+}

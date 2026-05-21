@@ -1,0 +1,83 @@
+<div class="pagina-wrapper">
+  <div class="banner">
+    <div class="banner-contenido">
+      <div class="banner-icono">
+        <i class="fa-solid fa-file-lines"></i>
+      </div>
+      <div class="banner-texto">
+        <h1 class="banner-titulo">Mis certificados</h1>
+        <p class="banner-descripcion">Consulta y descarga tus certificados</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="contenido-pagina">
+    <div class="card">
+      <div class="card-body">
+
+        @if (esAdminORecursosHumanos) {
+          <div class="filtros-panel">
+            <div class="filtro-grupo">
+              <label class="filtro-label">Empleado</label>
+              <div class="filtro-input-btn">
+                <input
+                  type="text"
+                  class="filtro-input"
+                  placeholder="Nombre del empleado..."
+                  [(ngModel)]="filtroNombre"
+                  (keyup.enter)="buscarPorNombre()"
+                />
+                <button class="btn-filtrar" (click)="buscarPorNombre()">
+                  <i class="fa-solid fa-magnifying-glass"></i>
+                </button>
+              </div>
+            </div>
+            <div class="filtro-grupo filtro-acciones">
+              <button class="btn-limpiar" (click)="limpiarFiltros()">
+                <i class="fa-solid fa-xmark"></i> Limpiar
+              </button>
+            </div>
+          </div>
+        }
+
+        @if (certificados() && certificados()!.length > 0) {
+          <div class="certificados-lista">
+            @for (c of certificados()!; track c.certificadoId) {
+              <div class="certificado-fila">
+                <div class="certificado-icono">
+                  <i class="fa-solid fa-file-lines"></i>
+                </div>
+                <div class="certificado-info">
+                  @if (esAdminORecursosHumanos) {
+                    <span class="certificado-empleado">{{ c.empleadoNombre }}</span>
+                  }
+                  <span class="certificado-nombre">{{ c.nombre }}</span>
+                  <span class="certificado-fecha">{{ c.fecha | date:'dd/MM/yyyy' }}</span>
+                </div>
+                <div class="certificado-acciones">
+                  <button class="btn-ver" (click)="ver(c)">
+                    <i class="fa-solid fa-eye"></i> Ver
+                  </button>
+                  <button class="btn-descargar" (click)="descargar(c)">
+                    <i class="fa-solid fa-download"></i> Descargar
+                  </button>
+                  @if (esAdminORecursosHumanos) {
+                    <button class="btn-eliminar" (click)="eliminar(c)">
+                      <i class="fa-solid fa-trash"></i>
+                    </button>
+                  }
+                </div>
+              </div>
+            }
+          </div>
+        } @else {
+          <div class="estado-vacio">
+            <i class="fa-solid fa-file-lines"></i>
+            <p>No hay certificados disponibles</p>
+          </div>
+        }
+
+      </div>
+    </div>
+  </div>
+</div>

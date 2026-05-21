@@ -1,0 +1,69 @@
+<div class="pagina-wrapper">
+  <!-- Banner superior -->
+  <div class="banner">
+    <div class="banner-contenido">
+      <div class="banner-icono">
+        <i class="fa-solid fa-house-laptop"></i>
+      </div>
+      <div class="banner-texto">
+        <h1 class="banner-titulo">Solicitar teletrabajo</h1>
+        <p class="banner-descripcion">Solicita un nuevo periodo de teletrabajo</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="contenido-pagina contenido-centrado">
+    <div class="card">
+      <div class="card-body">
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+          <!-- Fecha inicio -->
+          <div class="campo-grupo">
+            <label class="form-label">Fecha de inicio</label>
+            <input
+              type="date"
+              class="form-control"
+              formControlName="fechaInicio">
+          </div>
+
+          <!-- Fecha fin -->
+          <div class="campo-grupo">
+            <label class="form-label">Fecha de fin</label>
+            <input
+              type="date"
+              class="form-control"
+              formControlName="fechaFin">
+          </div>
+
+          <!-- Botón de envío -->
+          <button
+            class="btn btn-primary w-100 btn-enviar"
+            type="submit"
+            [disabled]="form.invalid || cargando()">
+
+            @if (cargando()) {
+              <span class="spinner-border spinner-border-sm me-1"></span> Enviando...
+            } @else {
+              <i class="fa-solid fa-paper-plane me-1"></i> Enviar solicitud
+            }
+          </button>
+
+          <!-- Mensajes -->
+          @if (mensajeOk()) {
+            <div class="mensaje-estado mensaje-exito mt-3">
+              <i class="fa-solid fa-circle-check"></i>
+              <span>{{ mensajeOk() }}</span>
+            </div>
+          }
+
+          @if (mensajeError()) {
+            <div class="mensaje-estado mensaje-error mt-3">
+              <i class="fa-solid fa-circle-exclamation"></i>
+              <span>{{ mensajeError() }}</span>
+            </div>
+          }
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

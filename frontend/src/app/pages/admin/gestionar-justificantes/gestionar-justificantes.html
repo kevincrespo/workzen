@@ -1,0 +1,79 @@
+<div class="pagina-wrapper">
+  <!-- Banner superior -->
+  <div class="banner">
+    <div class="banner-contenido">
+      <div class="banner-icono">
+        <i class="fa-solid fa-file-medical"></i>
+      </div>
+      <div class="banner-texto">
+        <h1 class="banner-titulo">Gestionar justificantes</h1>
+        <p class="banner-descripcion">Consulta los justificantes medicos de todos los empleados</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="contenido-pagina">
+    <div class="card">
+      <div class="card-body">
+        <div class="tabla-cabecera">
+          <span class="tabla-titulo">Todos los justificantes</span>
+          <span class="contador">{{ justificantes().length }}</span>
+        </div>
+
+        <!-- Cargando -->
+        @if (cargando()) {
+          <div class="estado-vacio">
+            <span class="spinner-border spinner-border-sm me-2"></span>
+            Cargando justificantes...
+          </div>
+        }
+
+        <!-- Lista -->
+        @if (!cargando() && justificantes().length > 0) {
+          <div class="solicitudes-lista">
+            @for (j of justificantes(); track j.id) {
+              <div class="solicitud-fila">
+                <!-- Avatar -->
+                <div class="solicitud-avatar">
+                  {{ j.empleadoNombre?.charAt(0)?.toUpperCase() || '?' }}
+                </div>
+
+                <!-- Info -->
+                <div class="solicitud-info">
+                  <span class="solicitud-nombre">{{ j.empleadoNombre }}</span>
+                  <span class="solicitud-detalle">
+                    <span class="tipo-badge">Medico</span>
+                    <span class="solicitud-fechas">
+                      {{ j.fechaInicio | date:'dd/MM/yyyy' }} — {{ j.fechaFin | date:'dd/MM/yyyy' }}
+                    </span>
+                  </span>
+                  @if (j.motivo) {
+                    <span class="solicitud-motivo">{{ j.motivo }}</span>
+                  }
+                </div>
+
+                <!-- Acciones -->
+                <div class="solicitud-acciones">
+                  <button class="btn-accion btn-descargar-admin" (click)="descargar(j)" title="Descargar">
+                    <i class="fa-solid fa-download"></i>
+                  </button>
+                  <button class="btn-accion btn-eliminar" (click)="eliminar(j)" title="Eliminar">
+                    <i class="fa-solid fa-trash"></i>
+                  </button>
+                </div>
+              </div>
+            }
+          </div>
+        }
+
+        <!-- Vacio -->
+        @if (!cargando() && justificantes().length === 0) {
+          <div class="estado-vacio">
+            <i class="fa-solid fa-file-circle-check"></i>
+            <p>No hay justificantes registrados</p>
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+</div>

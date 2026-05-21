@@ -1,0 +1,92 @@
+<div class="pagina-wrapper">
+  <!-- Banner superior -->
+  <div class="banner">
+    <div class="banner-contenido">
+      <div class="banner-icono">
+        <i class="fa-solid fa-house-laptop"></i>
+      </div>
+      <div class="banner-texto">
+        <h1 class="banner-titulo">Gestionar teletrabajos</h1>
+        <p class="banner-descripcion">Aprueba o rechaza las solicitudes pendientes</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="contenido-pagina">
+    <div class="card">
+      <div class="card-body">
+        <div class="tabla-cabecera">
+          <span class="tabla-titulo">Solicitudes pendientes</span>
+          <span class="contador">{{ teletrabajosPendientes().length }}</span>
+        </div>
+
+        <!-- Cargando -->
+        @if (cargando()) {
+          <div class="estado-vacio">
+            <span class="spinner-border spinner-border-sm me-2"></span>
+            Cargando solicitudes...
+          </div>
+        }
+
+        <!-- Lista -->
+        @if (!cargando() && teletrabajosPendientes().length > 0) {
+          <div class="solicitudes-lista">
+            @for (t of teletrabajosPendientes(); track t.id) {
+              <div class="solicitud-fila" [class.procesando]="procesando() === t.id">
+                <!-- Avatar empleado -->
+                <div class="solicitud-avatar">
+                  {{ t.empleado.nombre.charAt(0).toUpperCase() }}
+                </div>
+
+                <!-- Info -->
+                <div class="solicitud-info">
+                  <span class="solicitud-nombre">{{ nombreCompleto(t) }}</span>
+
+                  <span class="solicitud-detalle">
+                    <span class="modalidad-badge">
+                      <i class="fa-solid fa-house-laptop"></i>
+                      Teletrabajo
+                    </span>
+
+                    <span class="solicitud-fechas">
+                      {{ t.fechaInicio | date:'dd/MM/yyyy' }} — {{ t.fechaFin | date:'dd/MM/yyyy' }}
+                    </span>
+                  </span>
+                </div>
+
+                <!-- Acciones -->
+                <div class="solicitud-acciones">
+                  <button
+                    class="btn-accion btn-aprobar"
+                    (click)="aprobar(t)"
+                    [disabled]="procesando() === t.id"
+                    title="Aprobar"
+                  >
+                    <i class="fa-solid fa-check"></i>
+                  </button>
+
+                  <button
+                    class="btn-accion btn-rechazar"
+                    (click)="rechazar(t)"
+                    [disabled]="procesando() === t.id"
+                    title="Rechazar"
+                  >
+                    <i class="fa-solid fa-xmark"></i>
+                  </button>
+                </div>
+              </div>
+            }
+          </div>
+        }
+
+        <!-- Vacío -->
+        @if (!cargando() && teletrabajosPendientes().length === 0) {
+          <div class="estado-vacio">
+            <i class="fa-solid fa-circle-check"></i>
+            <p>No hay solicitudes pendientes</p>
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+</div>

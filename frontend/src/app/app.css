@@ -1,0 +1,42 @@
+/* Layout principal */
+.app-layout {
+  display: flex;
+  align-items: stretch;
+  min-height: 100vh;
+}
+
+.app-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--color-bg);
+  min-width: 0;
+}
+
+.app-content > main {
+  flex: 1;
+}
+
+/* Footer */
+.app-footer {
+  padding: 20px 30px;
+  text-align: center;
+  font-size: 13px;
+  color: var(--color-text-light);
+  border-top: 1px solid #e2e8f0;
+  background-color: var(--color-bg);
+}
+
+@media (max-width: 768px) {
+  .app-content {
+    margin-left: 0;
+    width: 100%;
+  }
+}
+
+@media (max-width: 1366px) {
+  .app-footer {
+    padding: 16px 24px;
+    font-size: 12px;
+  }
+}

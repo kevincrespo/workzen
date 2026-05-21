@@ -1,0 +1,76 @@
+<div class="pagina-wrapper">
+  <!-- Banner superior -->
+  <div class="banner">
+    <div class="banner-contenido">
+      <div class="banner-icono">
+        <i class="fa-solid fa-calendar-plus"></i>
+      </div>
+      <div class="banner-texto">
+        <h1 class="banner-titulo">Solicitar ausencia</h1>
+        <p class="banner-descripcion">Solicita una nueva ausencia</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="contenido-pagina contenido-centrado">
+    <div class="card">
+      <div class="card-body">
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+          <!-- Tipo -->
+          <div class="campo-grupo">
+            <label class="form-label">Tipo de ausencia</label>
+            <select class="form-select" formControlName="tipo">
+              <option value="">-- Selecciona un tipo --</option>
+              <option *ngFor="let t of tipos()" [value]="t">
+                {{ t | titlecase }}
+              </option>
+            </select>
+          </div>
+
+          <!-- Fecha inicio -->
+          <div class="campo-grupo">
+            <label class="form-label">Fecha y hora de inicio</label>
+            <input type="datetime-local"
+                   class="form-control"
+                   formControlName="fechaInicio">
+          </div>
+
+          <!-- Fecha fin -->
+          <div class="campo-grupo">
+            <label class="form-label">Fecha y hora de fin</label>
+            <input type="datetime-local"
+                   class="form-control"
+                   formControlName="fechaFin">
+          </div>
+
+          <!-- Boton de envio -->
+          <button class="btn btn-primary w-100 btn-enviar"
+                  type="submit"
+                  [disabled]="form.invalid || cargando()">
+            @if (cargando()) {
+              <span class="spinner-border spinner-border-sm me-1"></span> Enviando...
+            } @else {
+              <i class="fa-solid fa-paper-plane me-1"></i> Enviar solicitud
+            }
+          </button>
+
+          <!-- Mensajes de estado -->
+          @if (mensajeOk()) {
+            <div class="mensaje-estado mensaje-exito mt-3">
+              <i class="fa-solid fa-circle-check"></i>
+              <span>{{ mensajeOk() }}</span>
+            </div>
+          }
+
+          @if (mensajeError()) {
+            <div class="mensaje-estado mensaje-error mt-3">
+              <i class="fa-solid fa-circle-exclamation"></i>
+              <span>{{ mensajeError() }}</span>
+            </div>
+          }
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

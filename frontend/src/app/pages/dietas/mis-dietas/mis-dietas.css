@@ -1,0 +1,132 @@
+/* Contador */
+.contador {
+  font-size: 13px;
+  font-weight: 600;
+  background: rgba(20, 184, 166, 0.08);
+  color: var(--color-secondary);
+  padding: 4px 10px;
+  border-radius: 20px;
+}
+
+/* Lista de dietas */
+.dietas-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.dieta-fila {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 16px;
+  border-radius: 10px;
+  border: 1px solid #e8edf3;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+  box-shadow: var(--sombra-nivel-1);
+}
+
+.dieta-fila:hover {
+  background-color: rgba(251, 146, 60, 0.04);
+  box-shadow: var(--sombra-nivel-2);
+  transform: translateY(-2px);
+}
+
+/* Icono de tipo */
+.dieta-icono {
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  background: rgba(20, 184, 166, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-secondary);
+  font-size: 17px;
+  flex-shrink: 0;
+}
+
+/* Info de la dieta */
+.dieta-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.dieta-tipo {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-text);
+}
+
+.dieta-fechas {
+  font-size: 13px;
+  color: var(--color-text-light);
+}
+
+.dieta-motivo {
+  font-size: 12px;
+  color: var(--color-text-light);
+  opacity: 0.8;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Badges de estado */
+.estado-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 5px 12px;
+  border-radius: 20px;
+  flex-shrink: 0;
+  letter-spacing: 0.2px;
+}
+
+.estado-badge i {
+  font-size: 11px;
+}
+
+.estado-pendiente {
+  background: rgba(251, 146, 60, 0.1);
+  color: #c2410c;
+}
+
+.estado-aprobado {
+  background: rgba(52, 211, 153, 0.1);
+  color: #065f46;
+}
+
+.estado-rechazado {
+  background: rgba(229, 62, 62, 0.1);
+  color: #c53030;
+}
+
+.estado-anulado {
+  background: rgba(100, 116, 139, 0.1);
+  color: #475569;
+}
+
+/* Estado vacio */
+.estado-vacio {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--color-text-light);
+  font-size: 14px;
+}
+
+.estado-vacio i {
+  font-size: 36px;
+  margin-bottom: 12px;
+  opacity: 0.4;
+  display: block;
+}
+
+.estado-vacio p {
+  margin: 0;
+}

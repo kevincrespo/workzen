@@ -1,0 +1,171 @@
+/* Cabecera */
+.tabla-cabecera-izq {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.contador {
+  font-size: 13px;
+  font-weight: 600;
+  background: rgba(20, 184, 166, 0.08);
+  color: var(--color-secondary);
+  padding: 4px 10px;
+  border-radius: 20px;
+}
+
+/* Formulario de crear */
+.crear-form {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.crear-form .form-control {
+  flex: 1;
+  font-size: 14px;
+  padding: 10px 12px;
+  border: 1px solid #dce3ed;
+  border-radius: 8px;
+  background-color: #f8fafc;
+  transition: border-color 0.15s ease, background-color 0.15s ease;
+}
+
+.crear-form .form-control:focus {
+  background-color: #fff;
+  border-color: var(--color-secondary);
+  box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.12);
+  outline: none;
+}
+
+.btn-crear {
+  font-size: 13px;
+  font-weight: 600;
+  padding: 10px 20px;
+  border-radius: 8px;
+  background: var(--color-secondary);
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
+  box-shadow: 0 2px 6px rgba(20, 184, 166, 0.3);
+  white-space: nowrap;
+}
+
+.btn-crear:hover:not(:disabled) {
+  background: #0d7c72;
+  box-shadow: 0 4px 10px rgba(20, 184, 166, 0.35);
+  transform: translateY(-1px);
+}
+
+.btn-crear:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Columnas de tabla */
+.col-empleados {
+  width: 100px;
+  text-align: center;
+}
+
+.col-acciones {
+  width: 120px;
+  text-align: center;
+}
+
+/* Badge de empleados */
+.empleados-badge {
+  font-size: 12px;
+  font-weight: 600;
+  background: rgba(20, 184, 166, 0.08);
+  color: var(--color-secondary);
+  padding: 3px 10px;
+  border-radius: 12px;
+}
+
+/* Input de edicion inline */
+.input-edicion {
+  font-size: 14px;
+  padding: 6px 10px;
+  border: 1px solid var(--color-secondary);
+  border-radius: 6px;
+  background-color: #fff;
+  box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.12);
+  outline: none;
+  width: 100%;
+}
+
+/* Botones de accion */
+.btn-accion {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  border: 1px solid #e8edf3;
+  background: transparent;
+  cursor: pointer;
+  transition: background-color 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
+  margin: 0 2px;
+}
+
+.btn-editar {
+  color: var(--color-secondary);
+}
+
+.btn-editar:hover {
+  background-color: rgba(20, 184, 166, 0.08);
+  border-color: var(--color-secondary);
+  transform: translateY(-1px);
+}
+
+.btn-eliminar {
+  color: #ef4444;
+}
+
+.btn-eliminar:hover {
+  background-color: rgba(239, 68, 68, 0.08);
+  border-color: #ef4444;
+  transform: translateY(-1px);
+}
+
+.btn-guardar {
+  color: var(--color-secondary);
+}
+
+.btn-guardar:hover {
+  background-color: rgba(20, 184, 166, 0.08);
+  border-color: var(--color-secondary);
+  transform: translateY(-1px);
+}
+
+.btn-cancelar {
+  color: var(--color-text-light);
+}
+
+.btn-cancelar:hover {
+  background-color: rgba(100, 116, 139, 0.08);
+  border-color: var(--color-text-light);
+  transform: translateY(-1px);
+}
+
+/* Estado vacio / cargando */
+.estado-vacio {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--color-text-light);
+  font-size: 14px;
+}
+
+.estado-vacio i {
+  font-size: 36px;
+  margin-bottom: 12px;
+  opacity: 0.4;
+  display: block;
+}
+
+.estado-vacio p {
+  margin: 0;
+}

@@ -1,0 +1,32 @@
+/* Tarjetas de configuracion */
+.tarjeta-config {
+  border-left: 3px solid var(--color-secondary);
+}
+
+.tarjeta-config:nth-of-type(2) {
+  border-left-color: var(--color-accent);
+}
+
+.tarjeta-config:nth-of-type(3) {
+  border-left-color: var(--color-primary);
+}
+
+/* Titulo de seccion en config */
+.titulo-config {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-text);
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  margin-bottom: 16px;
+}
+
+/* Select de configuracion */
+.select-config {
+  max-width: 300px;
+  font-size: 14px;
+  padding: 10px 12px;
+  border: 1px solid #dce3ed;
+  border-radius: 8px;
+  background-color: #f8fafc;
+}

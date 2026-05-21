@@ -1,0 +1,252 @@
+<div class="pagina-wrapper">
+  <!-- Banner superior -->
+  <div class="banner">
+    <a routerLink="/empleados" class="btn-volver-banner">
+      <i class="fa-solid fa-arrow-left me-1"></i> Volver al listado
+    </a>
+    <div class="banner-contenido">
+      <div class="banner-icono">
+        <i class="fa-solid fa-id-card"></i>
+      </div>
+      <div class="banner-texto">
+        <h1 class="banner-titulo">
+          @if (empleado()) {
+            {{ nombreCompleto }}
+          } @else {
+            Detalle del empleado
+          }
+        </h1>
+        <p class="banner-descripcion">Ficha del empleado</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="contenido-pagina">
+
+    <!-- Cargando -->
+    @if (cargando()) {
+      <div class="card">
+        <div class="card-body estado-vacio">
+          <span class="spinner-border spinner-border-sm me-2"></span>
+          Cargando datos del empleado...
+        </div>
+      </div>
+    }
+
+    @if (!cargando() && empleado()) {
+
+      <!-- Mensajes -->
+      @if (mensajeOk()) {
+        <div class="mensaje-estado mensaje-exito mb-3">
+          <i class="fa-solid fa-circle-check"></i>
+          <span>{{ mensajeOk() }}</span>
+        </div>
+      }
+      @if (mensajeError()) {
+        <div class="mensaje-estado mensaje-error mb-3">
+          <i class="fa-solid fa-circle-exclamation"></i>
+          <span>{{ mensajeError() }}</span>
+        </div>
+      }
+
+      <form [formGroup]="form" (ngSubmit)="guardar()">
+
+        <!-- Datos personales -->
+        <div class="card mb-3">
+          <div class="card-body">
+            <h3 class="seccion-titulo">
+              <i class="fa-solid fa-user me-2"></i>Datos personales
+            </h3>
+
+            <div class="row">
+              <div class="col-md-4">
+                <div class="campo-grupo">
+                  <label class="form-label">Nombre</label>
+                  @if (editando()) {
+                    <input type="text" class="form-control" formControlName="nombre">
+                  } @else {
+                    <span class="campo-valor">{{ empleado()!.nombre }}</span>
+                  }
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="campo-grupo">
+                  <label class="form-label">Primer apellido</label>
+                  @if (editando()) {
+                    <input type="text" class="form-control" formControlName="apellido1">
+                  } @else {
+                    <span class="campo-valor">{{ empleado()!.apellido1 }}</span>
+                  }
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="campo-grupo">
+                  <label class="form-label">Segundo apellido</label>
+                  @if (editando()) {
+                    <input type="text" class="form-control" formControlName="apellido2">
+                  } @else {
+                    <span class="campo-valor">{{ empleado()!.apellido2 || '—' }}</span>
+                  }
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-4">
+                <div class="campo-grupo">
+                  <label class="form-label">NIF</label>
+                  @if (editando()) {
+                    <input type="text" class="form-control" formControlName="nif">
+                  } @else {
+                    <span class="campo-valor">{{ empleado()!.nif }}</span>
+                  }
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="campo-grupo">
+                  <label class="form-label">Fecha de nacimiento</label>
+                  @if (editando()) {
+                    <input type="date" class="form-control" formControlName="fechaNacimiento">
+                  } @else {
+                    <span class="campo-valor">{{ empleado()!.fechaNacimiento | date:'dd/MM/yyyy' }}</span>
+                  }
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="campo-grupo">
+                  <label class="form-label">Telefono</label>
+                  @if (editando()) {
+                    <input type="text" class="form-control" formControlName="telefono">
+                  } @else {
+                    <span class="campo-valor">{{ empleado()!.telefono || '—' }}</span>
+                  }
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Direccion -->
+        <div class="card mb-3">
+          <div class="card-body">
+            <h3 class="seccion-titulo">
+              <i class="fa-solid fa-location-dot me-2"></i>Direccion
+            </h3>
+
+            <div class="row">
+              <div class="col-md-12">
+                <div class="campo-grupo">
+                  <label class="form-label">Direccion</label>
+                  @if (editando()) {
+                    <input type="text" class="form-control" formControlName="direccion">
+                  } @else {
+                    <span class="campo-valor">{{ empleado()!.direccion }}</span>
+                  }
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-4">
+                <div class="campo-grupo">
+                  <label class="form-label">Localidad</label>
+                  @if (editando()) {
+                    <input type="text" class="form-control" formControlName="localidad">
+                  } @else {
+                    <span class="campo-valor">{{ empleado()!.localidad }}</span>
+                  }
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="campo-grupo">
+                  <label class="form-label">Provincia</label>
+                  @if (editando()) {
+                    <input type="text" class="form-control" formControlName="provincia">
+                  } @else {
+                    <span class="campo-valor">{{ empleado()!.provincia }}</span>
+                  }
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="campo-grupo">
+                  <label class="form-label">Codigo postal</label>
+                  @if (editando()) {
+                    <input type="number" class="form-control" formControlName="codigoPostal">
+                  } @else {
+                    <span class="campo-valor">{{ empleado()!.codigoPostal }}</span>
+                  }
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Datos laborales -->
+        <div class="card mb-3">
+          <div class="card-body">
+            <h3 class="seccion-titulo">
+              <i class="fa-solid fa-briefcase me-2"></i>Datos laborales
+            </h3>
+
+            <div class="row">
+              <div class="col-md-4">
+                <div class="campo-grupo">
+                  <label class="form-label">Departamento</label>
+                  @if (editando()) {
+                    <select class="form-select" formControlName="departamentoId">
+                      @for (d of departamentos(); track d.id) {
+                        <option [value]="d.id">{{ d.nombre }}</option>
+                      }
+                    </select>
+                  } @else {
+                    <span class="campo-valor">{{ empleado()!.departamento }}</span>
+                  }
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="campo-grupo">
+                  <label class="form-label">Numero de la Seguridad Social</label>
+                  @if (editando()) {
+                    <input type="text" class="form-control" formControlName="numeroSs">
+                  } @else {
+                    <span class="campo-valor">{{ empleado()!.numeroSs }}</span>
+                  }
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="campo-grupo">
+                  <label class="form-label">IBAN</label>
+                  @if (editando()) {
+                    <input type="text" class="form-control" formControlName="iban">
+                  } @else {
+                    <span class="campo-valor">{{ empleado()!.iban || '—' }}</span>
+                  }
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Botones de accion -->
+        <div class="acciones-ficha">
+          @if (!editando()) {
+            <button type="button" class="btn btn-editar" (click)="activarEdicion()">
+              <i class="fa-solid fa-pen me-2"></i> Editar
+            </button>
+          } @else {
+            <button type="submit" class="btn btn-guardar" [disabled]="guardando() || form.invalid">
+              @if (guardando()) {
+                <span class="spinner-border spinner-border-sm me-1"></span> Guardando...
+              } @else {
+                <i class="fa-solid fa-floppy-disk me-2"></i> Guardar
+              }
+            </button>
+            <button type="button" class="btn btn-cancelar" (click)="cancelarEdicion()" [disabled]="guardando()">
+              <i class="fa-solid fa-xmark me-2"></i> Cancelar
+            </button>
+          }
+        </div>
+      </form>
+    }
+  </div>
+</div>

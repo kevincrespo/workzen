@@ -1,0 +1,85 @@
+<div class="pagina-wrapper">
+  <!-- Banner superior -->
+  <div class="banner">
+    <div class="banner-contenido">
+      <div class="banner-icono">
+        <i class="fa-solid fa-plus"></i>
+      </div>
+      <div class="banner-texto">
+        <h1 class="banner-titulo">Solicitar dieta</h1>
+        <p class="banner-descripcion">Solicita una nueva dieta</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="contenido-pagina contenido-centrado">
+    <div class="card">
+      <div class="card-body">
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+          <!-- Tipo -->
+          <div class="campo-grupo">
+            <label class="form-label">Tipo de dieta</label>
+            <select class="form-select" formControlName="tipo">
+              <option value="">-- Selecciona un tipo --</option>
+              @for (t of tipos; track t) {
+                <option [value]="t">{{ t | titlecase }}</option>
+              }
+            </select>
+          </div>
+
+          <!-- Fecha inicio -->
+          <div class="campo-grupo">
+            <label class="form-label">Fecha de inicio</label>
+            <input type="date"
+                   class="form-control"
+                   formControlName="fechaInicio">
+          </div>
+
+          <!-- Fecha fin -->
+          <div class="campo-grupo">
+            <label class="form-label">Fecha de fin</label>
+            <input type="date"
+                   class="form-control"
+                   formControlName="fechaFin">
+          </div>
+
+          <!-- Motivo -->
+          <div class="campo-grupo">
+            <label class="form-label">Motivo</label>
+            <textarea class="form-control"
+                      formControlName="motivo"
+                      rows="3"
+                      placeholder="Describe el motivo de la dieta"></textarea>
+          </div>
+
+          <!-- Boton de envio -->
+          <button class="btn btn-primary w-100 btn-enviar"
+                  type="submit"
+                  [disabled]="form.invalid || cargando()">
+            @if (cargando()) {
+              <span class="spinner-border spinner-border-sm me-1"></span> Enviando...
+            } @else {
+              <i class="fa-solid fa-paper-plane me-1"></i> Enviar solicitud
+            }
+          </button>
+
+          <!-- Mensajes de estado -->
+          @if (mensajeOk()) {
+            <div class="mensaje-estado mensaje-exito mt-3">
+              <i class="fa-solid fa-circle-check"></i>
+              <span>{{ mensajeOk() }}</span>
+            </div>
+          }
+
+          @if (mensajeError()) {
+            <div class="mensaje-estado mensaje-error mt-3">
+              <i class="fa-solid fa-circle-exclamation"></i>
+              <span>{{ mensajeError() }}</span>
+            </div>
+          }
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

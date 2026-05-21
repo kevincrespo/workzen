@@ -1,0 +1,156 @@
+<div class="pagina-wrapper">
+  <!-- Banner superior -->
+  <div class="banner">
+    <div class="banner-contenido">
+      <div class="banner-icono">
+        <i class="fa-solid fa-file-medical"></i>
+      </div>
+      <div class="banner-texto">
+        <h1 class="banner-titulo">Justificantes medicos</h1>
+        <p class="banner-descripcion">Sube justificantes para tus ausencias medicas aprobadas</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="contenido-pagina">
+
+    <!-- Mensaje de estado -->
+    @if (mensaje()) {
+      <div class="alert alert-{{ tipoMensaje() }} alert-dismissible fade show mb-3" role="alert">
+        {{ mensaje() }}
+        <button type="button" class="btn-close" (click)="mensaje.set('')"></button>
+      </div>
+    }
+
+    <!-- Cargando -->
+    @if (cargando()) {
+      <div class="card">
+        <div class="card-body">
+          <div class="estado-vacio">
+            <span class="spinner-border spinner-border-sm me-2"></span>
+            Cargando...
+          </div>
+        </div>
+      </div>
+    } @else {
+
+      <!-- Ausencias pendientes de justificante -->
+      <div class="card mb-3">
+        <div class="card-body">
+          <div class="tabla-cabecera">
+            <span class="tabla-titulo">
+              <i class="fa-solid fa-upload me-2"></i>Ausencias pendientes de justificante
+            </span>
+            <span class="contador">{{ ausenciasPendientes().length }}</span>
+          </div>
+
+          @if (ausenciasPendientes().length > 0) {
+            <div class="lista-filas">
+              @for (a of ausenciasPendientes(); track a.id) {
+                <div class="fila-item">
+                  <div class="fila-icono">
+                    <i class="fa-solid fa-stethoscope"></i>
+                  </div>
+                  <div class="fila-info">
+                    <span class="fila-tipo">Ausencia medica</span>
+                    <span class="fila-fechas">
+                      {{ a.fechaInicio | date:'dd/MM/yyyy' }} — {{ a.fechaFin | date:'dd/MM/yyyy' }}
+                    </span>
+                  </div>
+
+                  @if (subiendoId() !== a.id) {
+                    <button class="btn-subir" (click)="mostrarFormulario(a.id)">
+                      <i class="fa-solid fa-cloud-arrow-up me-1"></i> Subir justificante
+                    </button>
+                  }
+                </div>
+
+                <!-- Formulario de subida inline -->
+                @if (subiendoId() === a.id) {
+                  <div class="formulario-subida">
+                    <div class="campo-archivo">
+                      <label class="label-campo">Archivo (PDF, JPG, PNG)</label>
+                      <input
+                        type="file"
+                        class="form-control form-control-sm"
+                        accept=".pdf,.jpg,.jpeg,.png"
+                        (change)="onArchivoSeleccionado($event)"
+                      />
+                    </div>
+                    <div class="campo-motivo">
+                      <label class="label-campo">Motivo (opcional)</label>
+                      <input
+                        type="text"
+                        class="form-control form-control-sm"
+                        placeholder="Ej: Consulta medica"
+                        [(ngModel)]="motivo"
+                      />
+                    </div>
+                    <div class="formulario-acciones">
+                      <button
+                        class="btn-enviar"
+                        (click)="subirJustificante()"
+                        [disabled]="!archivoSeleccionado || procesando()"
+                      >
+                        @if (procesando()) {
+                          <span class="spinner-border spinner-border-sm me-1"></span>
+                        }
+                        <i class="fa-solid fa-paper-plane me-1"></i> Enviar
+                      </button>
+                      <button class="btn-cancelar" (click)="cancelarSubida()" [disabled]="procesando()">
+                        Cancelar
+                      </button>
+                    </div>
+                  </div>
+                }
+              }
+            </div>
+          } @else {
+            <div class="estado-vacio">
+              <i class="fa-solid fa-circle-check"></i>
+              <p>No tienes ausencias pendientes de justificante</p>
+            </div>
+          }
+        </div>
+      </div>
+
+      <!-- Mis justificantes subidos -->
+      <div class="card">
+        <div class="card-body">
+          <div class="tabla-cabecera">
+            <span class="tabla-titulo">
+              <i class="fa-solid fa-folder-open me-2"></i>Mis justificantes
+            </span>
+            <span class="contador">{{ misJustificantes().length }}</span>
+          </div>
+
+          @if (misJustificantes().length > 0) {
+            <div class="lista-filas">
+              @for (j of misJustificantes(); track j.id) {
+                <div class="fila-item">
+                  <div class="fila-icono fila-icono-completado">
+                    <i class="fa-solid fa-file-circle-check"></i>
+                  </div>
+                  <div class="fila-info">
+                    <span class="fila-tipo">{{ j.motivo || 'Justificante medico' }}</span>
+                    <span class="fila-fechas">
+                      Ausencia: {{ j.fechaInicio | date:'dd/MM/yyyy' }} — {{ j.fechaFin | date:'dd/MM/yyyy' }}
+                    </span>
+                  </div>
+                  <button class="btn-descargar" (click)="descargar(j)">
+                    <i class="fa-solid fa-download me-1"></i> Descargar
+                  </button>
+                </div>
+              }
+            </div>
+          } @else {
+            <div class="estado-vacio">
+              <i class="fa-solid fa-folder-open"></i>
+              <p>No has subido ningun justificante</p>
+            </div>
+          }
+        </div>
+      </div>
+    }
+  </div>
+</div>

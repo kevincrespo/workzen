@@ -1,0 +1,215 @@
+<div class="pagina-wrapper">
+  <!-- Banner superior -->
+  <div class="banner">
+    <a routerLink="/empleados" class="btn-volver-banner">
+      <i class="fa-solid fa-arrow-left me-1"></i> Volver al listado
+    </a>
+    <div class="banner-contenido">
+      <div class="banner-icono">
+        <i class="fa-solid fa-user-plus"></i>
+      </div>
+      <div class="banner-texto">
+        <h1 class="banner-titulo">Nuevo empleado</h1>
+        <p class="banner-descripcion">Alta de un nuevo empleado en la empresa</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="contenido-pagina">
+
+    <!-- Mensajes -->
+    @if (mensajeOk()) {
+      <div class="mensaje-estado mensaje-exito mb-3">
+        <i class="fa-solid fa-circle-check"></i>
+        <span>{{ mensajeOk() }}</span>
+      </div>
+    }
+    @if (mensajeError()) {
+      <div class="mensaje-estado mensaje-error mb-3">
+        <i class="fa-solid fa-circle-exclamation"></i>
+        <span>{{ mensajeError() }}</span>
+      </div>
+    }
+
+    <form [formGroup]="form" (ngSubmit)="guardar()">
+
+      <!-- Cuenta de usuario -->
+      <div class="card mb-3">
+        <div class="card-body">
+          <h3 class="seccion-titulo">
+            <i class="fa-solid fa-key me-2"></i>Cuenta de usuario
+          </h3>
+
+          <div class="row">
+            <div class="col-md-6">
+              <div class="campo-grupo">
+                <label class="form-label">Email</label>
+                <input type="email" class="form-control" formControlName="email" placeholder="usuario@empresa.com">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="campo-grupo">
+                <label class="form-label">Contrasena</label>
+                <input type="password" class="form-control" formControlName="password">
+              </div>
+            </div>
+          </div>
+
+          <div class="campo-grupo">
+            <label class="form-label">Privilegios</label>
+            <div class="privilegios-grupo">
+              @for (p of privilegiosDisponibles; track p) {
+                <button type="button"
+                        class="btn btn-privilegio"
+                        [class.btn-privilegio-activo]="tienePrivilegio(p)"
+                        (click)="togglePrivilegio(p)">
+                  <i class="fa-solid me-1" [class.fa-check]="tienePrivilegio(p)" [class.fa-plus]="!tienePrivilegio(p)"></i>
+                  {{ p }}
+                </button>
+              }
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Datos personales -->
+      <div class="card mb-3">
+        <div class="card-body">
+          <h3 class="seccion-titulo">
+            <i class="fa-solid fa-user me-2"></i>Datos personales
+          </h3>
+
+          <div class="row">
+            <div class="col-md-4">
+              <div class="campo-grupo">
+                <label class="form-label">Nombre</label>
+                <input type="text" class="form-control" formControlName="nombre">
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="campo-grupo">
+                <label class="form-label">Primer apellido</label>
+                <input type="text" class="form-control" formControlName="apellido1">
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="campo-grupo">
+                <label class="form-label">Segundo apellido</label>
+                <input type="text" class="form-control" formControlName="apellido2">
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-4">
+              <div class="campo-grupo">
+                <label class="form-label">NIF</label>
+                <input type="text" class="form-control" formControlName="nif">
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="campo-grupo">
+                <label class="form-label">Fecha de nacimiento</label>
+                <input type="date" class="form-control" formControlName="fechaNacimiento">
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="campo-grupo">
+                <label class="form-label">Telefono</label>
+                <input type="text" class="form-control" formControlName="telefono">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Direccion -->
+      <div class="card mb-3">
+        <div class="card-body">
+          <h3 class="seccion-titulo">
+            <i class="fa-solid fa-location-dot me-2"></i>Direccion
+          </h3>
+
+          <div class="row">
+            <div class="col-md-12">
+              <div class="campo-grupo">
+                <label class="form-label">Direccion</label>
+                <input type="text" class="form-control" formControlName="direccion">
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-4">
+              <div class="campo-grupo">
+                <label class="form-label">Localidad</label>
+                <input type="text" class="form-control" formControlName="localidad">
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="campo-grupo">
+                <label class="form-label">Provincia</label>
+                <input type="text" class="form-control" formControlName="provincia">
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="campo-grupo">
+                <label class="form-label">Codigo postal</label>
+                <input type="number" class="form-control" formControlName="codigoPostal">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Datos laborales -->
+      <div class="card mb-3">
+        <div class="card-body">
+          <h3 class="seccion-titulo">
+            <i class="fa-solid fa-briefcase me-2"></i>Datos laborales
+          </h3>
+
+          <div class="row">
+            <div class="col-md-4">
+              <div class="campo-grupo">
+                <label class="form-label">Departamento</label>
+                <select class="form-select" formControlName="departamentoId">
+                  <option [value]="0" disabled>Selecciona un departamento</option>
+                  @for (d of departamentos(); track d.id) {
+                    <option [value]="d.id">{{ d.nombre }}</option>
+                  }
+                </select>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="campo-grupo">
+                <label class="form-label">Numero de la Seguridad Social</label>
+                <input type="text" class="form-control" formControlName="numeroSs">
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="campo-grupo">
+                <label class="form-label">IBAN</label>
+                <input type="text" class="form-control" formControlName="iban">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Boton de accion -->
+      <div class="acciones-ficha">
+        <button type="submit" class="btn btn-guardar" [disabled]="guardando() || form.invalid">
+          @if (guardando()) {
+            <span class="spinner-border spinner-border-sm me-1"></span> Creando...
+          } @else {
+            <i class="fa-solid fa-user-plus me-2"></i> Crear empleado
+          }
+        </button>
+        <a routerLink="/empleados" class="btn btn-cancelar">
+          <i class="fa-solid fa-xmark me-2"></i> Cancelar
+        </a>
+      </div>
+    </form>
+  </div>
+</div>

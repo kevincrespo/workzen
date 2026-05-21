@@ -1,0 +1,74 @@
+<div class="pagina-wrapper">
+  <!-- Banner superior -->
+  <div class="banner">
+    <div class="banner-contenido">
+      <div class="banner-icono">
+        <i class="fa-solid fa-utensils"></i>
+      </div>
+      <div class="banner-texto">
+        <h1 class="banner-titulo">Mis dietas</h1>
+        <p class="banner-descripcion">Historial de tus dietas</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="contenido-pagina">
+    <div class="card">
+      <div class="card-body">
+        <div class="tabla-cabecera">
+          <span class="tabla-titulo">Historial</span>
+          <span class="contador">{{ dietas().length }}</span>
+        </div>
+
+        <!-- Lista de dietas -->
+        @if (dietas().length > 0) {
+          <div class="dietas-lista">
+            @for (d of dietas(); track $index) {
+              <div class="dieta-fila">
+                <!-- Icono segun tipo -->
+                <div class="dieta-icono">
+                  <i class="fa-solid" [ngClass]="{
+                    'fa-flag': d.tipo === 'nacional',
+                    'fa-plane': d.tipo === 'internacional'
+                  }"></i>
+                </div>
+
+                <!-- Info -->
+                <div class="dieta-info">
+                  <span class="dieta-tipo">{{ d.tipo | titlecase }}</span>
+                  <span class="dieta-fechas">
+                    {{ d.fechaInicio | date:'dd/MM/yyyy' }} — {{ d.fechaFin | date:'dd/MM/yyyy' }}
+                  </span>
+                  @if (d.motivo) {
+                    <span class="dieta-motivo">{{ d.motivo }}</span>
+                  }
+                </div>
+
+                <!-- Badge de estado -->
+                <span class="estado-badge" [ngClass]="{
+                  'estado-pendiente': d.estado === 'pendiente',
+                  'estado-aprobado': d.estado === 'aprobado',
+                  'estado-rechazado': d.estado === 'rechazado',
+                  'estado-anulado': d.estado === 'anulado'
+                }">
+                  <i class="fa-solid" [ngClass]="{
+                    'fa-clock': d.estado === 'pendiente',
+                    'fa-circle-check': d.estado === 'aprobado',
+                    'fa-circle-xmark': d.estado === 'rechazado',
+                    'fa-ban': d.estado === 'anulado'
+                  }"></i>
+                  {{ d.estado | titlecase }}
+                </span>
+              </div>
+            }
+          </div>
+        } @else {
+          <div class="estado-vacio">
+            <i class="fa-solid fa-utensils"></i>
+            <p>No tienes dietas registradas</p>
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+</div>

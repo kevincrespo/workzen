@@ -1,0 +1,128 @@
+<div class="pagina-wrapper">
+  <!-- Banner superior -->
+  <div class="banner">
+    <div class="banner-contenido">
+      <div class="banner-icono">
+        <i class="fa-solid fa-building"></i>
+      </div>
+      <div class="banner-texto">
+        <h1 class="banner-titulo">Departamentos</h1>
+        <p class="banner-descripcion">Gestion de departamentos de la empresa</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="contenido-pagina">
+    <div class="card">
+      <div class="card-body">
+        <!-- Cabecera -->
+        <div class="tabla-cabecera">
+          <div class="tabla-cabecera-izq">
+            <span class="tabla-titulo">Departamentos</span>
+            <span class="contador">{{ departamentos().length }}</span>
+          </div>
+        </div>
+
+        <!-- Mensaje de estado -->
+        @if (mensaje()) {
+          <div class="mensaje-estado" [class.mensaje-exito]="tipoMensaje() === 'exito'" [class.mensaje-error]="tipoMensaje() === 'error'">
+            <i class="fa-solid" [class.fa-circle-check]="tipoMensaje() === 'exito'" [class.fa-circle-xmark]="tipoMensaje() === 'error'"></i>
+            {{ mensaje() }}
+          </div>
+        }
+
+        <!-- Formulario de crear -->
+        <div class="crear-form">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Nombre del departamento"
+            [formControl]="nuevoNombre"
+            (keydown.enter)="nuevoNombre.valid && crearDepartamento()"
+          />
+          <button
+            class="btn-crear"
+            [disabled]="nuevoNombre.invalid"
+            (click)="crearDepartamento()"
+          >
+            <i class="fa-solid fa-plus me-1"></i> Crear
+          </button>
+        </div>
+
+        <!-- Cargando -->
+        @if (cargando()) {
+          <div class="estado-vacio">
+            <span class="spinner-border spinner-border-sm me-2"></span>
+            Cargando departamentos...
+          </div>
+        }
+
+        <!-- Tabla de departamentos -->
+        @if (!cargando() && departamentos().length > 0) {
+          <table class="tabla-datos">
+            <thead>
+              <tr>
+                <th>Nombre</th>
+                <th class="col-empleados">Empleados</th>
+                <th class="col-acciones">Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (dep of departamentos(); track dep.id) {
+                <tr>
+                  <!-- Nombre (editable o texto) -->
+                  <td>
+                    @if (editandoId() === dep.id) {
+                      <input
+                        type="text"
+                        class="form-control input-edicion"
+                        [value]="editandoNombre()"
+                        (input)="editandoNombre.set($any($event.target).value)"
+                        (keydown.enter)="guardarEdicion(dep.id)"
+                        (keydown.escape)="cancelarEdicion()"
+                      />
+                    } @else {
+                      {{ dep.nombre }}
+                    }
+                  </td>
+
+                  <!-- Contador de empleados -->
+                  <td class="col-empleados">
+                    <span class="empleados-badge">{{ dep.numEmpleados }}</span>
+                  </td>
+
+                  <!-- Acciones -->
+                  <td class="col-acciones">
+                    @if (editandoId() === dep.id) {
+                      <button class="btn-accion btn-guardar" (click)="guardarEdicion(dep.id)" title="Guardar">
+                        <i class="fa-solid fa-check"></i>
+                      </button>
+                      <button class="btn-accion btn-cancelar" (click)="cancelarEdicion()" title="Cancelar">
+                        <i class="fa-solid fa-xmark"></i>
+                      </button>
+                    } @else {
+                      <button class="btn-accion btn-editar" (click)="iniciarEdicion(dep)" title="Editar">
+                        <i class="fa-solid fa-pen"></i>
+                      </button>
+                      <button class="btn-accion btn-eliminar" (click)="eliminarDepartamento(dep)" title="Eliminar">
+                        <i class="fa-solid fa-trash"></i>
+                      </button>
+                    }
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        }
+
+        <!-- Vacio -->
+        @if (!cargando() && departamentos().length === 0) {
+          <div class="estado-vacio">
+            <i class="fa-solid fa-building"></i>
+            <p>No hay departamentos registrados</p>
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+</div>

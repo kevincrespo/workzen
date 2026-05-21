@@ -1,0 +1,55 @@
+<div class="pagina-wrapper">
+  <!-- Banner superior -->
+  <div class="banner">
+    <div class="banner-contenido">
+      <div class="banner-icono">
+        <i class="fa-solid fa-file-invoice-dollar"></i>
+      </div>
+      <div class="banner-texto">
+        <h1 class="banner-titulo">Mis nominas</h1>
+        <p class="banner-descripcion">Consulta y descarga tus nominas</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="contenido-pagina">
+    <div class="card">
+      <div class="card-body">
+        <!-- Cabecera con filtro -->
+        <div class="tabla-cabecera">
+          <span class="tabla-titulo">Listado de nominas</span>
+          <select class="form-select filtro-anio" (change)="changeYear($event)">
+            @for (year of years(); track year) {
+              <option [value]="year">{{ year }}</option>
+            }
+          </select>
+        </div>
+
+        <!-- Lista de nominas -->
+        @if (nominas$ | async; as nominas) {
+          <div class="nominas-lista">
+            @for (n of nominas; track n.id) {
+              <div class="nomina-fila">
+                <div class="nomina-icono">
+                  <i class="fa-solid fa-file-pdf"></i>
+                </div>
+                <div class="nomina-info">
+                  <span class="nomina-fecha">{{ n.fecha | date:'dd/MM/yyyy' }}</span>
+                  <span class="nomina-id">#{{ n.id }}</span>
+                </div>
+                <button class="btn btn-sm btn-descargar" (click)="descargar(n.id, n.fecha)">
+                  <i class="fa-solid fa-download me-1"></i>Descargar
+                </button>
+              </div>
+            }
+          </div>
+        } @else {
+          <div class="nominas-vacio">
+            <i class="fa-solid fa-folder-open"></i>
+            <p>No hay nominas disponibles</p>
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+</div>

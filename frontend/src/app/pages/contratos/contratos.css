@@ -1,0 +1,250 @@
+/* Filtros */
+.filtros-panel {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: flex-end;
+  margin-bottom: 20px;
+  padding: 16px;
+  background-color: #f8fafc;
+  border: 1px solid #e8edf3;
+  border-radius: 10px;
+}
+
+.filtro-grupo {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.filtro-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--color-text-light);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.filtro-input {
+  font-size: 13px;
+  padding: 6px 10px;
+  border: 1px solid #dce3ed;
+  border-radius: 8px;
+  background-color: white;
+  min-width: 180px;
+}
+
+.filtro-select {
+  font-size: 13px;
+  padding: 6px 10px;
+  border: 1px solid #dce3ed;
+  border-radius: 8px;
+  background-color: white;
+  min-width: 160px;
+}
+
+.filtro-input-btn {
+  display: flex;
+  gap: 6px;
+}
+
+.btn-filtrar {
+  padding: 6px 10px;
+  border: 1px solid var(--color-secondary);
+  border-radius: 8px;
+  background-color: transparent;
+  color: var(--color-secondary);
+  font-size: 13px;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.btn-filtrar:hover {
+  background-color: var(--color-secondary);
+  color: white;
+}
+
+.filtro-acciones {
+  flex-direction: row;
+  gap: 8px;
+  align-items: flex-end;
+}
+
+.btn-buscar-fechas {
+  font-size: 13px;
+  font-weight: 500;
+  padding: 6px 14px;
+  border-radius: 8px;
+  border: 1px solid var(--color-secondary);
+  background-color: transparent;
+  color: var(--color-secondary);
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.btn-buscar-fechas:hover {
+  background-color: var(--color-secondary);
+  color: white;
+}
+
+.btn-limpiar {
+  font-size: 13px;
+  font-weight: 500;
+  padding: 6px 14px;
+  border-radius: 8px;
+  border: 1px solid #dce3ed;
+  background-color: transparent;
+  color: var(--color-text-light);
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.btn-limpiar:hover {
+  background-color: #f1f5f9;
+  color: var(--color-text);
+}
+
+/* Lista de contratos */
+.contratos-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.contrato-fila {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 16px;
+  border-radius: 10px;
+  border: 1px solid #e8edf3;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+  box-shadow: var(--sombra-nivel-1);
+}
+
+.contrato-fila:hover {
+  background-color: rgba(251, 146, 60, 0.04);
+  box-shadow: var(--sombra-nivel-2);
+  transform: translateY(-2px);
+}
+
+/* Icono del documento */
+.contrato-icono {
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  background: rgba(20, 184, 166, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-secondary);
+  font-size: 17px;
+  flex-shrink: 0;
+}
+
+.contrato-fila:hover .contrato-icono {
+  background: rgba(251, 146, 60, 0.1);
+  color: var(--color-accent);
+}
+
+/* Info del contrato */
+.contrato-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.contrato-empleado {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-text);
+}
+
+.contrato-tipo {
+  font-size: 12px;
+  color: var(--color-text-light);
+}
+
+.contrato-fecha {
+  font-size: 12px;
+  color: var(--color-text-light);
+}
+
+/* Acciones */
+.contrato-acciones {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.btn-ver {
+  background-color: transparent;
+  border: 1px solid var(--color-secondary);
+  color: var(--color-secondary);
+  font-size: 13px;
+  font-weight: 500;
+  border-radius: 8px;
+  padding: 6px 14px;
+  transition: background-color 0.15s ease, color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+}
+
+.btn-ver:hover {
+  background-color: var(--color-secondary);
+  color: white;
+  box-shadow: 0 3px 10px rgba(20,184,166,0.3);
+  transform: translateY(-1px);
+}
+
+.btn-descargar {
+  background-color: transparent;
+  border: 1px solid var(--color-secondary);
+  color: var(--color-secondary-dark);
+  font-size: 13px;
+  font-weight: 500;
+  border-radius: 8px;
+  padding: 6px 14px;
+  transition: background-color 0.15s ease, color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+}
+
+.btn-descargar:hover {
+  background-color: var(--color-accent);
+  color: white;
+  box-shadow: 0 3px 10px rgba(251,146,60,0.3);
+  transform: translateY(-1px);
+}
+
+.btn-eliminar {
+  background-color: transparent;
+  border: 1px solid #fca5a5;
+  color: #ef4444;
+  font-size: 13px;
+  border-radius: 8px;
+  padding: 6px 10px;
+  transition: background-color 0.15s ease, color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+}
+
+.btn-eliminar:hover {
+  background-color: #ef4444;
+  color: white;
+  box-shadow: 0 3px 10px rgba(239,68,68,0.3);
+  transform: translateY(-1px);
+}
+
+/* Estado vacío */
+.contratos-vacio {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--color-text-light);
+}
+
+.contratos-vacio i {
+  font-size: 36px;
+  margin-bottom: 12px;
+  opacity: 0.4;
+}
+
+.contratos-vacio p {
+  font-size: 14px;
+  margin: 0;
+}
