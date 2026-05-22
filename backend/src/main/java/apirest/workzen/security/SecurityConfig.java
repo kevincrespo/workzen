@@ -103,7 +103,7 @@ public class SecurityConfig {
         // Origenes permitidos (Angular local y produccion)
         configuration.setAllowedOrigins(List.of(
                 "http://localhost:4200",
-                "https://workzen.jccv.es"
+                "https://workzen.kevincrespodev.com"
         ));
 
         // Metodos HTTP permitidos
