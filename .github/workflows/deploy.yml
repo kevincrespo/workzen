@@ -1,0 +1,78 @@
+name: Deploy Workzen
+
+on:
+  push:
+    branches:
+      - main
+
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Descargar repositorio
+        uses: actions/checkout@v4
+
+      - name: Configurar Java 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+
+      - name: Compilar backend
+        working-directory: backend
+        run: |
+          chmod +x mvnw
+          ./mvnw clean package -DskipTests
+
+      - name: Configurar Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Instalar dependencias frontend
+        working-directory: frontend
+        run: npm ci
+
+      - name: Compilar frontend
+        working-directory: frontend
+        run: npm run build
+
+      - name: Configurar clave SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.VPS_SSH_KEY }}" > ~/.ssh/workzen_github_actions
+          chmod 600 ~/.ssh/workzen_github_actions
+          ssh-keyscan -H ${{ secrets.VPS_HOST }} >> ~/.ssh/known_hosts
+
+      - name: Subir archivos al VPS
+        run: |
+          ssh -i ~/.ssh/workzen_github_actions ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "mkdir -p /tmp/workzen-deploy/frontend"
+
+          rsync -az --delete \
+            -e "ssh -i ~/.ssh/workzen_github_actions" \
+            frontend/dist/workzen/browser/ \
+            ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/tmp/workzen-deploy/frontend/
+
+          scp -i ~/.ssh/workzen_github_actions \
+            backend/target/workzen.jar \
+            ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/tmp/workzen-deploy/workzen.jar
+
+      - name: Aplicar despliegue en VPS
+        run: |
+          ssh -i ~/.ssh/workzen_github_actions ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} << 'EOF'
+            sudo -n /usr/bin/rsync -a --delete /tmp/workzen-deploy/frontend/ /var/www/workzen.kevincrespodev.com/
+
+            sudo -n /usr/bin/chown -R www-data:www-data /var/www/workzen.kevincrespodev.com
+            sudo -n /usr/bin/find /var/www/workzen.kevincrespodev.com -type d -exec chmod 755 {} \;
+            sudo -n /usr/bin/find /var/www/workzen.kevincrespodev.com -type f -exec chmod 644 {} \;
+
+            sudo -n /usr/bin/install -o workzen -g workzen -m 755 /tmp/workzen-deploy/workzen.jar /opt/workzen/backend/workzen.jar
+
+            sudo -n /bin/systemctl restart workzen
+            sudo -n /bin/systemctl status workzen
+          EOF
