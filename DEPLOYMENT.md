@@ -69,3 +69,5 @@ VPS_SSH_KEY
 3. Sube Angular al VPS.
 4. Sube workzen.jar al VPS.
 5. Reinicia el servicio workzen.
+
+Última revisión del despliegue: CI/CD configurado correctamente.
