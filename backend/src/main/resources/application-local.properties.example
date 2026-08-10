@@ -1,0 +1,27 @@
+server.port=8085
+
+# Base de datos
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+spring.datasource.url=jdbc:mysql://127.0.0.1:3306/workzen?serverTimezone=Europe/Madrid
+spring.datasource.username=TU_USUARIO
+spring.datasource.password=TU_PASSWORD
+
+# JPA / Hibernate
+spring.jpa.generate-ddl=false
+spring.jpa.show-sql=true
+spring.jpa.hibernate.ddl-auto=none
+spring.jpa.open-in-view=false
+
+# JWT (usa una clave de al menos 32 caracteres)
+jwt.secret=TU_CLAVE_SECRETA_MINIMO_32_CARACTERES
+jwt.expiration=86400000
+
+# Directorios de archivos
+nominas.upload-dir=./uploads/nominas
+documentos.upload.dir=./uploads/documentos
+justificantes.upload-dir=./uploads/justificantes
+
+# Swagger
+springdoc.api-docs.enabled=true
+springdoc.swagger-ui.enabled=true
+springdoc.swagger-ui.path=/swagger-ui.html
